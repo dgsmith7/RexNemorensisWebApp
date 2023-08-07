@@ -5,4 +5,4 @@
 > The priest who slew the slayer  
 > And shall himself be slain.
 >
-> > > > > > > -McCaulay
+> -- <cite>McCaulay</cite>
