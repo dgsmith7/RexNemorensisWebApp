@@ -1,0 +1,21 @@
+html {
+  background-color: #0f0f23;
+}
+
+body {
+  padding: 50px;
+  font: 20px "Syne Mono", Helvetica, Arial, serif;
+  color: #00cc00;
+  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+}
+
+button {
+  font: 20px "Syne Mono", Helvetica, Arial, serif;
+  background-color: #0f0f23;
+  color: #00cc00;
+  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+}
+
+button:hover {
+  color: #99ff99;
+}
