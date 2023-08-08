@@ -19,3 +19,7 @@ button {
 button:hover {
   color: #99ff99;
 }
+
+div {
+  width: 90ch;
+}
