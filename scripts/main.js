@@ -16,7 +16,7 @@ public class RexNemorensis {
 
 /*
 TODO
-    Add a probability - "you dropped youre weapon, buttefingers" when on an edge so players are encouraged to enter middle of board.
+    Add a probability - "you dropped youre weapon, butterfingers" when on an edge so players are encouraged to enter middle of board.
     Draw the map really nicely once at the beginning instead of lame one
     Draw an ascii image at the beginning
     Add a 'draw map' command or add the map as an item to find

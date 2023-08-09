@@ -114,7 +114,7 @@ export let guntletInView = [
 ];
 export let tinctureInView = [
   `There is a delicate clay bottle containing an iridescent liquid atop an altar.`,
-  `You catch a whiff of something delightful coming from a nearby vile.`,
+  `You catch a whiff of something delightful coming from a nearby vile.  Take it easy man, there is a beverage here.`,
   `A glass full of liquid catches your fancy like a cold beer on a hot afternoon.`,
 ];
 export let ringInView = [
@@ -142,19 +142,43 @@ export let shieldInView = [
   `A shield hangs from a nearby tree like a piece of fruit, as if the Gods placed it there for you to pick.`,
   `You see a sled that reminds you of your winter days sliding down the hills up North.  Then you realize it is actually a shield.`,
 ];
+
 export let nothingInView = [
-  `There is nothing else to see here.`,
-  `No other items are in sight.`,
-  `You look around. There is nothing else.`,
+  `A breeze flaps your loin cloth and you feel a tingle.  Otherwise there is nothing else to see here.`,
+  `A tumbleweed rolls by.  A swirl of dust follows.  No other items are in sight.`,
+  `You look around. The grove is gorgeous.  There is nothing here.`,
+  `Off on the horizon you see an armada of space cruisers amassing for battle.  There is nothing else here.`,
+  `This scenery is amazing.  If it weren't for all of the fighting, this would be a great spot for a vacation. Otherwise, there is nothing here to see.`,
+];
+
+// player drops weapon
+export let playerDropsWeapon = [
+  `You start slipping and naturally grab for something to hold onto.  As a result, your weapon falls into the abyss.  Back to the dagger.`,
+  `The cliff edge is hungry and it seems to enjoy eating weapons.  You watch sadly as yours falls into the abyss.`,
+  `You dropped your weapon over the edge, butterfingers.  There is a lost and found booth at the bottom of the abyss where you can reclaim it later.`,
+];
+
+// bot drops weapon
+export let botDropsWeapon = [
+  `You hear the clanging of metal against rock below and realize that your enemy must have accidentally dropped their weapon over the edge.`,
+  `You snicker as you notice your enemy fumbling around until they drop their weapon over the edge. People are always dropping stuff over the edge.`,
+  `You see your opponent slipping near the edge of the cliff.  They grab a handhold to save their hyde and their weapon falls into the abyss.`,
+];
+
+// lyrics
+export let song = [
+  `This is the end.  Beau-ti-ful friend, the end.  (Oh wait, thats the movie.)`,
+  `Yo-ho-ho-ho, a pirate's life for me.  (Oops, wrong adventure).`,
+  `I'm a priest who sings a song, until another comes along...`,
 ];
 
 // player dies from falling
 export let playerFallsEdge = [
   `You fell to your death, you clumsy fool!`,
   `Oopsie daisy!  You slip and fall to your death.  Wrong way, bozo.`,
-  `As you make impace, you feel a whisk of cool air on your brain as a breeze enters the fracture in your cranium.  You fell off the edge.`,
+  `As you make impact with the ground, you feel a whisk of cool air on your brain as a breeze enters the fracture in your cranium.  You fell off the edge.`,
 ];
-export let playFallsHole = [
+export let playerFallsHole = [
   `You fell a great distance down a hot, smelly hole and died a horrible, hot, smelly death!`,
   `The stench from the hole envelopes you as you fall into it's depths and die.`,
   `You fell into the smelly hole.  That stinks, literally and figuratively.`,
@@ -169,7 +193,7 @@ export let botFallsEdge = [
 export let botFallsHole = [
   `You hear the enemy scream as they fall to their hot, smelly death down a hot, smelly hole!`,
   `Your hot smelly enemy fell into the hot smelly hole and died a hot smelly death.`,
-  `A puff of stench arises as your enemy falls into the hot smelly hole to their death.`,
+  `A puff of stench arises as your enemy falls to their death into the hot smelly hole.`,
 ];
 
 // player misses
@@ -211,6 +235,8 @@ export let swordForSword = [
 ];
 export let swordForAxe = [
   `You decide to forgo the sword for the superior axe in hand.`,
+  `You pick up the sword, then put it back down becasue there is nothing as powerful as this axe.`,
+  `The axe is a less elegant weapon for a less civilized age.  You pass up the sword because nothing grinds meat and bone like this axe.`,
 ];
 export let alreadyHaveShield = [
   `Carrying another shield will not protect you further and will only slow you down.`,
@@ -276,14 +302,14 @@ export let edgeWest = [
 // other stuff
 export let hole = [
   `A foul, hot stench rises from a nearby hole in the ground.`,
-  `You notice a foul stench arising froma nearby hole in the ground.`,
+  `You notice a foul stench arising from a nearby hole in the ground.`,
   `A nasty smell reminding you of an unrequested political opinion arises from a nearby hole.`,
 ];
 
 // enemy near
 export let enemyNear = [
   `Your adreneline surges as you sense the closeness of your enemy.`,
-  `You smell the odor of your enemy as they enter your space.,`,
+  `You smell the stink of your enemy as they enter your space.,`,
   `The hair on your neck stands up as you sense the enemy nearby.`,
 ];
 
