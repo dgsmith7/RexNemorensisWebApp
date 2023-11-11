@@ -317,11 +317,13 @@ export let enemyNear = [
 export let intro = [
   `You are a mage and warrior. For your mettle, you have been honored to serve a priesthood for the Goddess Diana. In this role, your final role, you have been cast atop the windswept cliffs of The Grove at Nemi. In this place there are ruins and holes and cliff edges. Here you are relegated to stand an endless guard until you are killed by another exiled soul. Another like you currently stands guard awaiting your challenge to usurp their reign which you shall hold...as long as you live. For you, a violent death is assured - the question is how soon. How many battles will you survive if you can take the guard? You are armed with only your fists and a dagger, but there are other, more powerful weapons strewn about the mesa. There are also magical items, each with varying powers. Watch your step - you may fall to your death off the edge of the mesa or into a hole forevermore. The other guard lurks in the grove, awaiting the challengers.`,
 ];
+
 export let enterAMove = [
   `Ponder your next move and press a key: `,
   `Everyone waits with bated breath for your next move: `,
   `Your move, chief: `,
 ];
+
 export let peom = [
   `Those trees in whose dim shadow
 The ghastly priest doth reign
@@ -387,12 +389,12 @@ export let art = `
 ----------- Those trees in whose dim shadow----------(C) 2023 By David G. Smith----------
 ----------- The ghastly priest doth reign------------------------------------------------
 ----------- The priest who slew the slayer,----------------------------------------------
------------ And shall himself be slain.---------------------@%---------------------------
------------------------------- --McCaulay----------------(@@-----------------------------
+----------- And shall himself be slain.--------------------@%----------------------------
+------------------------------ --McCaulay---------------(@@------------------------------
 ----------------------------------------------------@@@@&###-----------------------------
-------/%%%/,,--------------------------------------%%%&%%%%##.---------------------------
-------%(...,..,---------------------------------###@&&&%%%%##/-----------/---------------
-------,.,..,,,,------------------------------@&&@@@&&&&%%%###/-------*@(-----------------
+------/%%%/,,-------------------------------------%%%&%%%%##.----------------------------
+------%(...,..,--------------------------------###@&&&%%%%##/----------/-----------------
+------,.,..,,,,------------------------------@&&@@@&&&&%%%###/-----*@(-------------------
 ------..,.,,,,,----------------------------&&@@@@&&&&%%%####(.-.#(@*,--------------------
 ---------,..,,,,,-------------------------##@@@@@@&&&%%%%###((#&(%/,---------------------
 ----------.,...,.,,-----------------------#%@@@@@@&&&&%%%###(%@%(,/.,----------/(--------
