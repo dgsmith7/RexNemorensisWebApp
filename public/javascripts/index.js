@@ -23,7 +23,7 @@ document.querySelector("#entry-box").addEventListener("keydown", (event) => {
       .then((r) => r.json())
       .then((response) => {
         let node1 = document.createElement("div");
-        node1.innerHTML = `${response.move}`;
+        node1.innerHTML = `> ${response.move}`;
         document.querySelector("#exchange-area").appendChild(node1);
         let node2 = document.createElement("div");
         node2.innerHTML = `${response.reply}`;
@@ -37,7 +37,6 @@ document.querySelector("#entry-box").addEventListener("keydown", (event) => {
 function manageViewLength() {
   let elem = document.querySelector("#exchange-area");
   let children = elem.children;
-  console.log(elem.children.length, children);
   if (elem.children.length >= 250) {
     for (let i = 0; i < 4; i++) {
       document.querySelector("#exchange-area").removeChild(children[i]);

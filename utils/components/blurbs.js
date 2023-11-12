@@ -374,6 +374,7 @@ Your health is ` + protagonist.health + `. The enemy's health is ` + enemy.healt
 You have defeated ` + protagonist.wins + ` challengers.
 */
 
+//Shield, sword, and axe image ASCIIfied by https://manytools.org/hacker-tools/convert-images-to-ascii-art/ based on image from https://pixabay.com/users/clker-free-vector-images-3736/
 export let art = `
 -----------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------

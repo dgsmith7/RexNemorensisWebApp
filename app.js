@@ -1,5 +1,5 @@
 import express from "express";
-import * as blurbs from "./utils/scripts/blurbs.js";
+import * as blurbs from "./utils/components/blurbs.js";
 import * as utils from "./utils/utils.js";
 let app = express();
 const port = 3000;
