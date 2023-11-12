@@ -223,7 +223,7 @@ export let playerNoHave = [
   `Good try, Rockstar, but you don't own that item.`,
   `I don't think so, mate. You don't own that item.`,
   `As if you own that item or something.`,
-  `Uhhhhh, you need to get one to wear one, Dufus.`,
+  `Uhhhhh, you need to find one to use one, Dufus.`,
   `Negative, Ghost-rider, the pattern is full. You don't own that item.`,
 ];
 
@@ -315,7 +315,21 @@ export let enemyNear = [
 
 // intro
 export let intro = [
-  `You are a mage and warrior. For your mettle, you have been honored to serve a priesthood for the Goddess Diana. In this role, your final role, you have been cast atop the windswept cliffs of The Grove at Nemi. In this place there are ruins and holes and cliff edges. Here you are relegated to stand an endless guard until you are killed by another exiled soul. Another like you currently stands guard awaiting your challenge to usurp their reign which you shall hold...as long as you live. For you, a violent death is assured - the question is how soon. How many battles will you survive if you can take the guard? You are armed with only your fists and a dagger, but there are other, more powerful weapons strewn about the mesa. There are also magical items, each with varying powers. Watch your step - you may fall to your death off the edge of the mesa or into a hole forevermore. The other guard lurks in the grove, awaiting the challengers.`,
+  `   You are a mage and warrior. For your mettle, you have been honored to serve a 
+priesthood for the Goddess Diana. In this role, your final role, you have been 
+cast atop the windswept cliffs of The Grove at Nemi. In this place there are ruins 
+and holes and cliff edges. Here you are relegated to stand an endless guard until 
+you are killed by another exiled soul. Another like you currently stands guard 
+awaiting your challenge to usurp their reign which you shall hold...but only for 
+as long as you survive. For you, a violent death is assured - the question is how
+soon. How many battles will you survive if you can take the guard? You are armed 
+with only your fists and a dagger, but there are other, more powerful weapons strewn 
+about the mesa. There are also magical items, each with varying powers. Watch your 
+step - you may fall to your death off the edge of the mesa or into a hole forevermore.
+The other guard lurks in the grove, awaiting the challengers.
+
+Press H for Help.
+  `,
 ];
 
 export let enterAMove = [
@@ -346,17 +360,15 @@ export let strongerEnemyTaunt = [
   `The more newly exiled souls you slaughter, the stronger they get, eh?`,
 ];
 export let help = [
-  `
------------------------------HELP----------------------------------
-| Rows run from 0 West to 7 East, Columns 0 North to 7 South |
-| These do not cost a turn: These moves cost one turn: |
-| H - Help N, S, E, W - move |
-| I - Inventory and status 1, 2, 3, 4, 5 - Use Magic Item |
-| Q - Quit A - Attack with strongest weapon |
-| G - get item |
-| M - look at map |
-
----
+  `     _____________________________________________________________________________  
+     |                                   HELP                                    |
+     |  Rows run from 0 West to 7 East, and Columns run from 0 North to 7 South  |
+     |        These moves do not cost a turn (enemy move does not follow):       |
+     |                H-Help  I-Inventory & status  M-Map     Q-Quit             |
+     |     These moves cost one turn (enemy gets move immediately following):    |
+     |             N, S, E, W - move    1, 2, 3, 4, 5 - Use Magic Item           |
+     |             G - Get item       A - Attack with strongest weapon           |
+     |___________________________________________________________________________|
 `,
 ];
 
@@ -367,6 +379,17 @@ export let playerLoses = [
   `You are defeated. A haloed child touches your head. You hear their whisper from behind, 'All glory is fleeting...'.  You turn too see their eyes glowing a firey red.`,
 ];
 
+export let unknownCommand = [
+  `I do not know how to do that.`,
+  `Try again, Ace!`,
+  `You can always just type 'h' for help.`,
+];
+
+export let profanityReply = [
+  `Such language in a high-class establishment like this.`,
+  `Go wash your mouth out with soap, youngster!`,
+  `Hey, fuggedaboutit!`,
+];
 /*
 You picked up the ` + item + ` Press I for inventory.
 The enemy picked up the ` + item + `. Oh, snap!
@@ -438,13 +461,13 @@ export let titleText1 = `_____  _____  ___    _  _________   ___ __  ____   ____
   / /_/ // _/ \\   /    /   \\ / _/ /      / // / /_/ // _/ /   \\ /\\__ \\/ /\\__ \\
  / /\\ \\ / /_ _/ _ \\   / /\\  / /__/ /\\_/ / // / /\\ \\ / /__/ /\\  /___/ / /___/ /
 /_/  \\//___//__/ \\/  /_/  \\/____/_/  /_/\\___/_/  \\//____/_/  \\/_____/_/_____/\n
-Rex Nemorensis                           Copyright(c) 2023 - David G. Smith
+Rex Nemorensis - a text adventure game     Copyright(c) 2023 - David G. Smith
 
-Those trees in whose dim shadow
-The ghastly priest doth reign
-The priest who slew the slayer,
-And shall himself be slain.
-                    --McCaulay
+     Those trees in whose dim shadow
+     The ghastly priest doth reign
+     The priest who slew the slayer,
+     And shall himself be slain.
+                         --McCaulay
 
 
-Press RETURN to continue\n`;
+Press RETURN to play\n`;

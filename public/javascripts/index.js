@@ -4,6 +4,8 @@
   let gameState = {};
   startGame();
   function startGame() {
+    window.scrollTo(0, document.body.scrollHeight);
+
     document.querySelector("body").addEventListener("click", () => {
       document.querySelector("#entry-box").focus();
     });
@@ -16,6 +18,9 @@
           move: document.querySelector("#entry-box").value,
           gameState: gameState,
         };
+        if (event.key == "Escape") {
+          console.log("pull up main menu screen");
+        }
         if (event.key === "Enter") {
           manageViewLength();
           document.getElementById("entry-box").value = "";
@@ -32,10 +37,12 @@
           })
             .then((r) => r.json())
             .then((response) => {
+              gameState = response.gameState;
               let node1 = document.createElement("div");
               node1.innerHTML = `> ${response.move}`;
               document.querySelector("#exchange-area").appendChild(node1);
               let node2 = document.createElement("div");
+              node2.className = "response-area";
               node2.innerHTML = `${response.reply}`;
               document.querySelector("#exchange-area").appendChild(node2);
               window.scrollTo(0, document.body.scrollHeight);

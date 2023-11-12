@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
-  utils.initialize();
   res.render("index.ejs", {
     art1: blurbs.titleText1,
   });
@@ -22,23 +21,23 @@ app.get("/", (req, res) => {
 app.post("/entry", async (req, res) => {
   let move = req.body.move;
   let gameState = req.body.gameState;
+  console.log("entry - ", gameState);
   let reply = utils.processMove(move, gameState);
   gameState = reply.gameState;
-  console.log("r1 - ", reply.message, reply.gameState);
   let reply2 = { message: "", gameState: gameState };
   if (gameState.advance == true) {
     reply2 = utils.processEnemyMove(reply.gameState);
     gameState = reply2.gameState;
-    console.log("r2 - ", reply2.message, reply2.gameState);
   }
-
-  console.log("final - ", reply.message, reply.gameState);
+  let reply3 = utils.checkForVictor(gameState);
   res.send({
     move: move,
     reply: reply.message + reply2.message + utils.getBlurb(blurbs.enterAMove),
     gameState: gameState,
   });
 });
+
+app.post("/menu", async (req, res) => {});
 
 // catch 404 and forward to error handler
 // app.use(function (req, res, next) {
