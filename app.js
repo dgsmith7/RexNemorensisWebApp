@@ -12,18 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
-// catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
-
-// error handler
-app.use(function (err, req, res, next) {
-  console.log("500");
-  res.status(err.status || 500);
-  res.render("error");
-});
-
 app.get("/", (req, res) => {
   utils.initialize();
   res.render("index.ejs", {
@@ -33,9 +21,36 @@ app.get("/", (req, res) => {
 
 app.post("/entry", async (req, res) => {
   let move = req.body.move;
-  let reply = utils.processMove(move);
-  res.send({ move: move, reply: reply });
+  let gameState = req.body.gameState;
+  let reply = utils.processMove(move, gameState);
+  gameState = reply.gameState;
+  console.log("r1 - ", reply.message, reply.gameState);
+  let reply2 = { message: "", gameState: gameState };
+  if (gameState.advance == true) {
+    reply2 = utils.processEnemyMove(reply.gameState);
+    gameState = reply2.gameState;
+    console.log("r2 - ", reply2.message, reply2.gameState);
+  }
+
+  console.log("final - ", reply.message, reply.gameState);
+  res.send({
+    move: move,
+    reply: reply.message + reply2.message + utils.getBlurb(blurbs.enterAMove),
+    gameState: gameState,
+  });
 });
+
+// catch 404 and forward to error handler
+// app.use(function (req, res, next) {
+//   next(createError(404));
+// });
+
+// error handler
+// app.use(function (err, req, res, next) {
+//   console.log("500");
+//   res.status(err.status || 500);
+//   res.render("error");
+// });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

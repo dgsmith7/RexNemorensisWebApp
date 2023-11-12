@@ -354,6 +354,7 @@ export let help = [
 | I - Inventory and status 1, 2, 3, 4, 5 - Use Magic Item |
 | Q - Quit A - Attack with strongest weapon |
 | G - get item |
+| M - look at map |
 
 ---
 `,

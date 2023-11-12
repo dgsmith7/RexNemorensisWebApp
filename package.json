@@ -8,6 +8,10 @@
     "dev": "npx nodemon app.js",
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgsmith7/RexNemorensisWebApp"
+  },
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
