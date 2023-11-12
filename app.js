@@ -1,7 +1,6 @@
 import express from "express";
 import * as blurbs from "./utils/scripts/blurbs.js";
 import * as utils from "./utils/utils.js";
-import { art } from "./utils/scripts/blurbs.js";
 let app = express();
 const port = 3000;
 
@@ -26,23 +25,16 @@ app.use(function (err, req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  console.log("this - ", art);
-  res.render("index.ejs", { art: art });
+  utils.initialize();
+  res.render("index.ejs", {
+    art1: blurbs.titleText1,
+  });
 });
 
 app.post("/entry", async (req, res) => {
-  console.log("in app post", req.body.move);
   let move = req.body.move;
-  console.log(move);
   let reply = utils.processMove(move);
-  // utils
-  //   .processMove(req.body.move)
-  //   .then((reply) => {
   res.send({ move: move, reply: reply });
-  // })
-  // .catch(() => {
-  //   res.send({ result: "fail" });
-  // });
 });
 
 app.listen(port, () => {

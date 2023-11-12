@@ -9,6 +9,10 @@ body {
   text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
 }
 
+#display {
+  white-space: pre;
+}
+
 input {
   font: 20px "Syne Mono", Helvetica, Arial, serif;
   background-color: #00cc0020;
