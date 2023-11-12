@@ -15,8 +15,7 @@ body {
 
 input {
   font: 20px "Syne Mono", Helvetica, Arial, serif;
-  background-color: #00cc0020;
-  /* box-shadow: 0px 0px 15px 4px #00cc00; */
+  background-color: #00cc0010;
   color: #00cc00;
   text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
   border: 0px;
@@ -26,24 +25,7 @@ input {
 
 input:focus {
   outline: none;
-  /* box-shadow: 0 0 0 0; */
   background-color: #0f0f23;
-}
-
-/* input:hover {
-  background-color: #0f0f23;
-  box-shadow: 0 0 15px 4px #00cc00;
-} */
-
-button {
-  font: 20px "Syne Mono", Helvetica, Arial, serif;
-  background-color: #0f0f23;
-  color: #00cc00;
-  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
-}
-
-button:hover {
-  color: #99ff99;
 }
 
 div {

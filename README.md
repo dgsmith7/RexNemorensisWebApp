@@ -1,11 +1,6 @@
 # RexNemorensisWebApp
 
-> Those trees in whose dim shadow  
-> The ghastly priest doth reign.  
-> The priest who slew the slayer  
-> And shall himself be slain.
->
-> -- <cite>McCaulay</cite>
+<img src="./public/images/Screenshot.png">
 
 Acknowledgements:
 Shield, sword, and axe image ASCIIfied by https://manytools.org/hacker-tools/convert-images-to-ascii-art/ based on image from https://pixabay.com/users/clker-free-vector-images-3736/  

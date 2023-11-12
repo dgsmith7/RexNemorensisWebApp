@@ -38,7 +38,7 @@ function manageViewLength() {
   let elem = document.querySelector("#exchange-area");
   let children = elem.children;
   console.log(elem.children.length, children);
-  if (elem.children.length >= 100) {
+  if (elem.children.length >= 250) {
     for (let i = 0; i < 4; i++) {
       document.querySelector("#exchange-area").removeChild(children[i]);
     }
