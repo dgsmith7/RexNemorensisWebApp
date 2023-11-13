@@ -28,19 +28,19 @@ export function processMove(move, gameState) {
     case "3": // magic item - tincture of restoration
     case "4": // magic item - ring of protection
     case "5": // magic item - crown of speed
-      reply = processMagic(parseInt(move.replace(/[^0-9]/g, "")));
+      reply = processMagic(parseInt(move.replace(/[^0-9]/g, "")), gameState);
       break;
     case "g": // get
-      reply = pickUpItem();
+      reply = pickUpItem(gameState);
       break;
     case "a": // attack
-      reply = processAttack();
+      reply = processAttack(gameState);
       break;
     case "n": // move
     case "s":
     case "e":
     case "w":
-      reply = processMovement(move);
+      reply = processMovement(move, gameState);
       break;
     case "m":
       reply = displayMap(gameState);
@@ -55,6 +55,18 @@ export function processMove(move, gameState) {
         ? (reply = getBlurb(profanityReply))
         : (reply = getBlurb(unknownCommand));
       gameState.advance = false;
+      break;
+  }
+  if (gameState.advance) advance(gameState);
+  checkForVictor();
+  switch (gameState.mode) {
+    case "player-died":
+      reply += resetForDeadPlayer();
+      break;
+    case "bot-died":
+      reply += resetForDeadBot();
+      break;
+    default:
       break;
   }
   return {
@@ -114,6 +126,8 @@ export function initialize(gameState) {
     mode: "active", // active, bot-died, player-died
     replay: true,
     history: [], // array of last 50 moves and replies for refresh
+    menuVisible: false, // maybe for quit - we'll see
+    turnNumber: 0,
   };
   return gameState;
 }
@@ -139,6 +153,12 @@ export function checkForVictor(gameState) {
     gameState.mode = "bot-died";
   }
   return gameState;
+}
+
+function advance(gamestate) {
+  // adjust gameState and stats
+  // maybe adjust history
+  // tick off active magic and make calls
 }
 
 function buildInventoryBlurb(gameState) {
@@ -206,21 +226,32 @@ function buildInventoryBlurb(gameState) {
   return reply;
 }
 
-function handleQuit() {
+function handleQuit(gameState) {
   // save to sql or file when able
   // show message and flash title
-  return "we handle a quit here";
+  return "We handle a quit here";
 }
 
-function processMagic(which) {
-  return "Processing magic";
+function processMagic(which, gameState) {
+  // when player invokes magic item
+  // adjust powers
+  // start countdown
+  return "Processing magic item " + which + ".";
 }
 
 function pickUpItem() {
+  // when player picks something up
+  //determine which item using location
+  // add to inventory
   return "Picked up the ...";
 }
 
+function dropWeapon() {
+  // when a play accidentally drops a weapon
+}
+
 function processAttack() {
+  // adjust bot and player
   return "You attacked and did x damage.";
 }
 
@@ -233,12 +264,16 @@ function isSwearWord(str) {
 }
 
 function processMovement(str) {
+  // move player around board
   return "Moving in the direction of " + str;
 }
 
-function generateBotMove() {}
+function generateBotMove() {
+  // "AI" bot
+}
 
 function getMapBlurb() {
+  //r eport on current location and stuff in sight
   return "This will report on current location and stuff in sight.";
 }
 
@@ -257,8 +292,21 @@ function displayMap(gameState) {
 
 function resetForDeadBot() {
   // reset map, reset bot progressive, plus-up player, show continue story message
+  /*
+              System.out.println(this.continueStory);
+            protagonist.showStatus();
+  */
+  return "Everything handled here for dead player";
 }
 
 function resetForDeadPlayer() {
   // initialize, send appropriate reply
+  /*
+      if (protagonist.wins == 0) {
+            System.out.println(this.title);
+            Game.getReturn();
+            System.out.println(this.backStory);
+            showHelpReport();
+            protagonist.showStatus(); */
+  return "Everything handled here for dead bot.";
 }
