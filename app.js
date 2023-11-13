@@ -21,18 +21,11 @@ app.get("/", (req, res) => {
 app.post("/entry", async (req, res) => {
   let move = req.body.move;
   let gameState = req.body.gameState;
-  console.log("entry - ", gameState);
   let reply = utils.processMove(move, gameState);
   gameState = reply.gameState;
-  let reply2 = { message: "", gameState: gameState };
-  if (gameState.advance == true) {
-    reply2 = utils.processEnemyMove(reply.gameState);
-    gameState = reply2.gameState;
-  }
-  let reply3 = utils.checkForVictor(gameState);
   res.send({
     move: move,
-    reply: reply.message + reply2.message + utils.getBlurb(blurbs.enterAMove),
+    reply: reply.message,
     gameState: gameState,
   });
 });

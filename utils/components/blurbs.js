@@ -28,10 +28,6 @@ export let sword = [`Sword. Direct hits will henceforth inflict 15 damage.`];
 export let shield = [
   `Shield. All hits from enemies will henceforth be reduced by 5 damage.`,
 ];
-export let loin = [
-  `The loin cloth of fortitude (always on - well, almost always). Modesty increased +50 when worn. Aho, warrior!`,
-];
-
 // player using magic
 export let playerUseCloak = [
   `You slide the cloak over your shoulders and suddenly disappear (too bad 'cuz your coiffure looks great today). You are safe from attack for now.`,
@@ -163,13 +159,6 @@ export let botDropsWeapon = [
   `You hear the clanging of metal against rock below and realize that your enemy must have accidentally dropped their weapon over the edge.`,
   `You snicker as you notice your enemy fumbling around until they drop their weapon over the edge. People are always dropping stuff over the edge.`,
   `You see your opponent slipping near the edge of the cliff.  They grab a handhold to save their hyde and their weapon falls into the abyss.`,
-];
-
-// lyrics
-export let song = [
-  `This is the end.  Beau-ti-ful friend, the end.  (Oh wait, thats the movie.)`,
-  `Yo-ho-ho-ho, a pirate's life for me.  (Oops, wrong adventure).`,
-  `I'm a priest who sings a song, until another comes along...`,
 ];
 
 // player dies from falling
@@ -313,6 +302,61 @@ export let enemyNear = [
   `The hair on your neck stands up as you sense the enemy nearby.`,
 ];
 
+/*
+You picked up the ` + item + ` Press I for inventory.
+The enemy picked up the ` + item + `. Oh, snap!
+top + ` struck with the ` + pri.weapon + ` inflicting ` + finalDamage + ` points damage, ` + magicStuff
+Your health is ` + protagonist.health + `. The enemy's health is ` + enemy.health
+You have defeated ` + protagonist.wins + ` challengers.
+*/
+
+/////////////////////////////////////////
+// player wins
+export let playerWins = [`You are victorious.`];
+
+export let gameResetAfterWin = [
+  `Your reign continues. A new challenger has entered the grove.`,
+];
+
+export let regenerate = [
+  `You make your way back to your camp to sharpen your weapons, grab some grub, and get cleaned up.
+You clean your loin cloth and your health improves by 25 points.
+Another soul has been exiled to the Grove to challenge your reign.
+You almost feel sorry for them, then you remember that poem.`,
+];
+
+export let strongerEnemyTaunt = [
+  `The more newly exiled souls you slaughter, the stronger they get, eh?`,
+];
+
+export let gameOver = `You hear the tolling of a death knell.`;
+
+// player loses
+export let playerLoses = [
+  `You are defeated. A haloed child touches your head. You hear their whisper from behind, 'All glory is fleeting...'.  You turn too see their eyes glowing a firey red.`,
+];
+
+export let loin = [
+  `The Loin Cloth of Fortitude. Modesty +50 when worn. Aho, warrior!`,
+  `The Loin Cloth of Fortitude. Commando bonus when not worn.`,
+  `The Loin Cloth of Fortitude. Always on - well, almost always.`,
+];
+
+export let nakedness = [
+  `Commando bonus!!!`,
+  `You tingle all over.`,
+  `All good things are wild and free.`,
+  `A cold breeze moves past you and shrinkage begins to set in.`,
+  `Fighting nude, eh?  Your brazen actions will surely scare the hell out of the enemy.`,
+];
+
+export let clothed = [
+  `You feel ready to fight.`,
+  `Modesty is a virtue.`,
+  `Come on, just a bit longer.`,
+  `Commando bonus secured.`,
+];
+
 // intro
 export let intro = [
   `   You are a mage and warrior. For your mettle, you have been honored to serve a 
@@ -329,7 +373,8 @@ step - you may fall to your death off the edge of the mesa or into a hole foreve
 The other guard lurks in the grove, awaiting the challengers.
 
 Press H for Help.
-  `,
+
+`,
 ];
 
 export let enterAMove = [
@@ -345,38 +390,20 @@ The priest who slew the slayer,
 And shall himself be slain.  -McCaulay`,
 ];
 
-// player wins
-export let playerWins = [`You are victorious.`];
-export let gameResetAfterWin = [
-  `Your reign continues. A new challenger has entered the grove.`,
-];
-export let regenerate = [
-  `You make your way back to your camp to sharpen your weapons, grab some grub, and get cleaned up.
-You clean your loin cloth and your health improves by 25 points.
-Another soul has been exiled to the Grove to challenge your reign.
-You almost feel sorry for them, then you remember that poem.`,
-];
-export let strongerEnemyTaunt = [
-  `The more newly exiled souls you slaughter, the stronger they get, eh?`,
-];
 export let help = [
   `     _____________________________________________________________________________  
      |                                   HELP                                    |
      |  Rows run from 0 West to 7 East, and Columns run from 0 North to 7 South  |
+     |                                                                           |
      |        These moves do not cost a turn (enemy move does not follow):       |
-     |                H-Help  I-Inventory & status  M-Map     Q-Quit             |
+     |              H-Help    I-Inventory & status  M-Map     Q-Quit             |
+     |           There are others ??? injected purely for entertainment          |
+     |                                                                           |
      |     These moves cost one turn (enemy gets move immediately following):    |
      |             N, S, E, W - move    1, 2, 3, 4, 5 - Use Magic Item           |
      |             G - Get item       A - Attack with strongest weapon           |
      |___________________________________________________________________________|
 `,
-];
-
-export let gameOver = `You hear the tolling of a death knell.`;
-
-// player loses
-export let playerLoses = [
-  `You are defeated. A haloed child touches your head. You hear their whisper from behind, 'All glory is fleeting...'.  You turn too see their eyes glowing a firey red.`,
 ];
 
 export let unknownCommand = [
@@ -389,14 +416,8 @@ export let profanityReply = [
   `Such language in a high-class establishment like this.`,
   `Go wash your mouth out with soap, youngster!`,
   `Hey, fuggedaboutit!`,
+  `Having a bad day, are we?`,
 ];
-/*
-You picked up the ` + item + ` Press I for inventory.
-The enemy picked up the ` + item + `. Oh, snap!
-top + ` struck with the ` + pri.weapon + ` inflicting ` + finalDamage + ` points damage, ` + magicStuff
-Your health is ` + protagonist.health + `. The enemy's health is ` + enemy.health
-You have defeated ` + protagonist.wins + ` challengers.
-*/
 
 //Shield, sword, and axe image ASCIIfied by https://manytools.org/hacker-tools/convert-images-to-ascii-art/ based on image from https://pixabay.com/users/clker-free-vector-images-3736/
 export let art = `
@@ -456,7 +477,8 @@ export let art = `
 -----------------------------------------------------------------------------------------
 `;
 
-export let titleText1 = `_____  _____  ___    _  _________   ___ __  ____   ______  ________________
+export let titleText1 = `
+    _____  _____  ___    _  _________   ___ __  ____   ______  ________________
    / __  \\/ __/ \\/ _/   / \\/  / ___/ \\ /  /   \\/ __ \\ / ___/ \\/  / ____/_/ ___/
   / /_/ // _/ \\   /    /   \\ / _/ /      / // / /_/ // _/ /   \\ /\\__ \\/ /\\__ \\
  / /\\ \\ / /_ _/ _ \\   / /\\  / /__/ /\\_/ / // / /\\ \\ / /__/ /\\  /___/ / /___/ /
@@ -471,3 +493,10 @@ Rex Nemorensis - a text adventure game     Copyright(c) 2023 - David G. Smith
 
 
 Press RETURN to play\n`;
+
+// lyrics
+export let song = [
+  `This is the end.  Beau-ti-ful friend, the end.  (Oh wait, thats the movie.)`,
+  `Yo-ho-ho-ho, a pirate's life for me.  (Oops, wrong adventure).`,
+  `I'm a priest who sings a song, until another comes along...`,
+];

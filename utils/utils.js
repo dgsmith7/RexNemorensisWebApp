@@ -21,6 +21,9 @@ export function processMove(move, gameState) {
       gameState.advance = false;
       break;
     case "q": // quit
+      gameState.mode = "quit";
+      gameState.gameOver = true;
+      gameState.advance = false;
       reply = handleQuit();
       break;
     case "1": // magic item - cloak of invisibility
@@ -50,23 +53,46 @@ export function processMove(move, gameState) {
       reply = "Alas, this is not Zork, my friend.";
       gameState.advance = false;
       break;
+    case "sing":
+      reply = getBlurb(blurbs.song) + "<br/>";
+      break;
+    case "poem":
+      reply = getBlurb(blurbs.poem) + "<br/>";
+      break;
+    case "remove loin cloth":
+    case "doff loin cloth":
+    case "get naked":
+    case "strip":
+      reply = getBlurb(blurbs.nakedness) + "<br/>";
+      break;
+    case "get dressed":
+    case "wear loin cloth":
+    case "put on loin cloth":
+    case "don loin cloth":
+      reply = getBlurb(blurbs.clothed) + "<br/>";
+      break;
     default:
       isSwearWord(move)
-        ? (reply = getBlurb(profanityReply))
-        : (reply = getBlurb(unknownCommand));
+        ? (reply = getBlurb(blurbs.profanityReply) + "<br/>")
+        : (reply = getBlurb(blurbs.unknownCommand) + "<br/>");
       gameState.advance = false;
       break;
   }
   if (gameState.advance) advance(gameState);
-  checkForVictor();
+  checkForVictor(gameState);
   switch (gameState.mode) {
     case "player-died":
-      reply += resetForDeadPlayer();
+      reply += resetForDeadPlayer(gameState);
+      gameState.gameOver = true;
       break;
     case "bot-died":
-      reply += resetForDeadBot();
+      reply += resetForDeadBot(gameState);
       break;
-    default:
+    case "active": // nobody died
+      reply += getBlurb(blurbs.enterAMove);
+      gameState.turnNumber++;
+      break;
+    default: // quit
       break;
   }
   return {
@@ -123,16 +149,18 @@ export function initialize(gameState) {
       wins: 0,
     },
     map: maps[parseInt(Math.random(maps.length))],
-    mode: "active", // active, bot-died, player-died
+    mode: "active", // active, bot-died, player-died, quit
     replay: true,
     history: [], // array of last 50 moves and replies for refresh
     menuVisible: false, // maybe for quit - we'll see
     turnNumber: 0,
+    gameOver: false,
   };
+  console.log("Initialized!");
   return gameState;
 }
 
-export function processEnemyMove(gameState) {
+export function processBotMove(gameState) {
   return {
     message: "This is the narrative from the enemy move.<br/>",
     gameState: gameState,
@@ -155,10 +183,15 @@ export function checkForVictor(gameState) {
   return gameState;
 }
 
-function advance(gamestate) {
+function advance(gameState) {
+  let reply = "";
+  reply += processBotMove(gameState);
+  reply += processMagic(gameState);
+  reply += getLocationBlurb(gameState);
   // adjust gameState and stats
   // maybe adjust history
   // tick off active magic and make calls
+  return reply;
 }
 
 function buildInventoryBlurb(gameState) {
@@ -166,7 +199,7 @@ function buildInventoryBlurb(gameState) {
   // this will show the inventory and staus
   let reply = `INVENTORY AND STATUS:
   You have ${gameState.player.health} health points.
-  Your strongest weapon is a ${gameState.player.weapon}. - each direct hit lands ${gameState.player.damage} damage.
+  Your strongest weapon is a ${gameState.player.weapon}. - each direct hit lands ${gameState.player.attack} damage.
   Your shield (or lack thereof) provides ${gameState.player.shield} protection from any attack.
   You `;
   if (gameState.player.hasMap == false) {
@@ -176,7 +209,6 @@ function buildInventoryBlurb(gameState) {
   These are your magic items: 
 `;
   let none = true;
-  console.log(gameState.player.magicItems);
   gameState.player.magicItems.forEach((element, index) => {
     if (element !== "") {
       reply += `   Press ${index + 1} to activate ${element}
@@ -213,7 +245,7 @@ function buildInventoryBlurb(gameState) {
       gameState.player.speed ==
     0
   ) {
-    reply += `   none
+    reply += `   ${getBlurb(blurbs.loin)}
 
 `;
   }
@@ -229,7 +261,7 @@ function buildInventoryBlurb(gameState) {
 function handleQuit(gameState) {
   // save to sql or file when able
   // show message and flash title
-  return "We handle a quit here";
+  return "Thanks for playing.";
 }
 
 function processMagic(which, gameState) {
@@ -268,11 +300,11 @@ function processMovement(str) {
   return "Moving in the direction of " + str;
 }
 
-function generateBotMove() {
+function generateBotMove(gameState) {
   // "AI" bot
 }
 
-function getMapBlurb() {
+function getLocationBlurb(gameState) {
   //r eport on current location and stuff in sight
   return "This will report on current location and stuff in sight.";
 }
@@ -285,21 +317,43 @@ function displayMap(gameState) {
       reply += `     ${element}<br/>`;
     });
   } else {
-    reply = getBlurb(blurbs.playerNoHave);
+    reply = getBlurb(blurbs.playerNoHave) + "<br/>";
   }
   return reply;
 }
 
-function resetForDeadBot() {
+function resetForDeadBot(gameState) {
   // reset map, reset bot progressive, plus-up player, show continue story message
   /*
               System.out.println(this.continueStory);
             protagonist.showStatus();
   */
+  /*if (enemy.health <= 0) {  // enemy died
+            endName = "enemy";// mechanism for control flow at end-game
+            System.out.println("You hear the tolling of a death knell.");
+            setState("game-over");
+        }  */
+  /*if (n.equals("enemy")) {
+            System.out.println("You are victorious. ");
+            protagonist.wins++;
+            System.out.println("You have defeated " + protagonist.wins + " challengers.");
+            System.out.println();
+            getReturn();
+            return 0;
+        } */
+  let reply = "";
+  reply += getBlurb(blurbs.gameOver);
+  reply += getBlurb(blurbs.playerWins);
+  reply += getBlurb(blurbs.regenerate);
+  reply += getBlurb(blurbs.gameResetAfterWin);
+  reply += getBlurb(blurbs.strongerEnemyTaunt);
   return "Everything handled here for dead player";
 }
 
-function resetForDeadPlayer() {
+function resetForDeadPlayer(gameState) {
+  let reply = "";
+  reply += getBlurb(blurbs.gameOver);
+  reply += getBlurb(blurbs.playerLoses);
   // initialize, send appropriate reply
   /*
       if (protagonist.wins == 0) {
@@ -308,5 +362,17 @@ function resetForDeadPlayer() {
             System.out.println(this.backStory);
             showHelpReport();
             protagonist.showStatus(); */
-  return "Everything handled here for dead bot.";
+
+  /*    if (protagonist.health <= 0) {  // hero died
+            endName = "hero"; // mechanism for control flow at end-game
+            System.out.println("You hear the tolling of a death knell.");
+            setState("game-over");
+        } */
+  /*if (n.equals("hero")) {
+            System.out.println("You are defeated. A haloed child touches your head. You hear their whisper from behind, 'All glory is fleeting...'");
+            System.out.println();
+            RexNemorensis.replay = checkReplay().startsWith("Y");
+            return 1;
+        }  */
+  return "Everything handled here for dead player.";
 }

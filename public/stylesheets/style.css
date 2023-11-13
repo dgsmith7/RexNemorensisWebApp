@@ -5,9 +5,9 @@ html {
 body {
   padding-left: 10px;
   padding-right: 10px;
-  font: 20px "Syne Mono", Helvetica, Arial, serif;
+  font: 18px "Syne Mono", Helvetica, Arial, serif;
   color: #00cc00;
-  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+  text-shadow: 0 0 1px #00cc00, 0 0 2px #00cc00;
 }
 
 #display,
@@ -18,6 +18,7 @@ body {
 div {
   padding-top: 5px;
   padding-bottom: 5px;
+  width: 90ch;
 }
 
 label {
@@ -25,10 +26,10 @@ label {
 }
 
 input {
-  font: 20px "Syne Mono", Helvetica, Arial, serif;
+  font: 18px "Syne Mono", Helvetica, Arial, serif;
   background-color: #00cc0010;
   color: #00cc00;
-  text-shadow: 0 0 2px #00cc00, 0 0 5px #00cc00;
+  text-shadow: 0 0 1px #00cc00, 0 0 2px #00cc00;
   border: 0px;
   width: 90%;
   caret-color: #00cc00;
@@ -37,8 +38,4 @@ input {
 input:focus {
   outline: none;
   background-color: #0f0f23;
-}
-
-div {
-  width: 90ch;
 }

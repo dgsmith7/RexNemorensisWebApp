@@ -38,15 +38,25 @@
             .then((r) => r.json())
             .then((response) => {
               gameState = response.gameState;
+              let append = "";
+              if (gameState.gameOver == true) {
+                init = true;
+                append = `
+Press ENTER for a new game.`;
+              }
               let node1 = document.createElement("div");
               node1.innerHTML = `> ${response.move}`;
               document.querySelector("#exchange-area").appendChild(node1);
               let node2 = document.createElement("div");
               node2.className = "response-area";
-              node2.innerHTML = `${response.reply}`;
+              node2.innerHTML = `${response.reply}${append}`;
               document.querySelector("#exchange-area").appendChild(node2);
               window.scrollTo(0, document.body.scrollHeight);
               document.querySelector("#entry-box").focus();
+              if (gameState.gameOver == true) {
+                init = true;
+                console.log(gameState.mode);
+              }
             });
         }
       });
