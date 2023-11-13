@@ -261,7 +261,7 @@ function buildInventoryBlurb(gameState) {
 function handleQuit(gameState) {
   // save to sql or file when able
   // show message and flash title
-  return "Thanks for playing.";
+  return getBlurb(blurbs.quitMessage) + "<br/>";
 }
 
 function processMagic(which, gameState) {

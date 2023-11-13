@@ -311,6 +311,11 @@ You have defeated ` + protagonist.wins + ` challengers.
 */
 
 /////////////////////////////////////////
+export let quitMessage = [
+  `Thanks for playing.`,
+  `You hear your enemy "Come back, you yellow bastard.  I'll bite your legs off!"`,
+  `This is the end.  Beau-ti-ful friend, the end.`,
+];
 // player wins
 export let playerWins = [`You are victorious.`];
 
