@@ -12,3 +12,5 @@ port to js
 auth - jwt, sessions, api keys?, db?
 sign up - saas provides stat tracking and leaderboard access and game printouts - how to manage payment? crypto payment?
 fix refresh problem - make history array
+add beat up map blurbs to display map
+remove hasMap true after dev
