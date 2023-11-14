@@ -1,6 +1,6 @@
 import express from "express";
-import * as blurbs from "./utils/components/blurbs.js";
-import * as utils from "./utils/utils.js";
+import * as blurbs from "./utils/blurbs.js";
+import * as game from "./utils/game.js";
 let app = express();
 const port = 3000;
 
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 app.post("/entry", async (req, res) => {
   let move = req.body.move;
   let gameState = req.body.gameState;
-  let reply = utils.processMove(move, gameState);
+  let reply = game.processMove(move, gameState);
   gameState = reply.gameState;
   res.send({
     move: move,
