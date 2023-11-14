@@ -96,72 +96,72 @@ export function getLocationBlurb(gameState) {
   }
   // holes
   if (nChar == "H" || sChar == "H" || wChar == "H" || eChar == "H") {
-    reply += blurbs.getBlurb(blurbs.hole);
+    reply += blurbs.getBlurb(blurbs.hole) + "<br/>";
   }
   // walls
-  if (nChar == "W") reply += blurbs.getBlurb(blurbs.wallNorth);
-  if (sChar == "W") reply += blurbs.getBlurb(blurbs.wallSouth);
-  if (wChar == "W") reply += blurbs.getBlurb(blurbs.wallWest);
-  if (eChar == "W") reply += blurbs.getBlurb(blurbs.wallEast);
+  if (nChar == "W") reply += blurbs.getBlurb(blurbs.wallNorth) + "<br/>";
+  if (sChar == "W") reply += blurbs.getBlurb(blurbs.wallSouth) + "<br/>";
+  if (wChar == "W") reply += blurbs.getBlurb(blurbs.wallWest) + "<br/>";
+  if (eChar == "W") reply += blurbs.getBlurb(blurbs.wallEast) + "<br/>";
   // edges
   if (row == 0) {
-    reply += blurbs.getBlurb(blurbs.edgeNorth);
+    reply += blurbs.getBlurb(blurbs.edgeNorth) + "<br/>";
   }
   if (row == 7) {
-    reply += blurbs.getBlurb(blurbs.edgeSouth);
+    reply += blurbs.getBlurb(blurbs.edgeSouth) + "<br/>";
   }
   if (col == 0) {
-    reply += blurbs.getBlurb(blurbs.edgeWest);
+    reply += blurbs.getBlurb(blurbs.edgeWest) + "<br/>";
   }
   if (col == 7) {
-    reply += blurbs.getBlurb(blurbs.edgeEast);
+    reply += blurbs.getBlurb(blurbs.edgeEast) + "<br/>";
   }
   // magic items
   if (gameState.map[row].charAt(col) == "1") {
-    reply += blurbs.getBlurb(blurbs.cloakInView);
+    reply += blurbs.getBlurb(blurbs.cloakInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "2") {
-    reply += blurbs.getBlurb(blurbs.gauntletInView);
+    reply += blurbs.getBlurb(blurbs.gauntletInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "3") {
-    reply += blurbs.getBlurb(blurbs.ringInView);
+    reply += blurbs.getBlurb(blurbs.ringInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "4") {
-    reply += blurbs.getBlurb(blurbs.tinctureInView);
+    reply += blurbs.getBlurb(blurbs.tinctureInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "5") {
-    reply += blurbs.getBlurb(blurbs.crownInView);
+    reply += blurbs.getBlurb(blurbs.crownInView) + "<br/>";
     signif = true;
   }
   // weapons
   if (gameState.map[row].charAt(col) == "A") {
-    reply += blurbs.getBlurb(blurbs.axeInView);
+    reply += blurbs.getBlurb(blurbs.axeInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "S") {
-    reply += blurbs.getBlurb(blurbs.swordInView);
+    reply += blurbs.getBlurb(blurbs.swordInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "D") {
-    reply += blurbs.getBlurb(blurbs.shieldInView);
+    reply += blurbs.getBlurb(blurbs.shieldInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "M") {
-    reply += blurbs.getBlurb(blurbs.mapInView);
+    reply += blurbs.getBlurb(blurbs.mapInView) + "<br/>";
     signif = true;
   }
   if (signif) reply += `Press 'g' to get this item.\n`;
   // enemy
   if (nearEachOther(gameState)) {
-    reply += blurbs.getBlurb(blurbs.enemyNear);
+    reply += blurbs.getBlurb(blurbs.enemyNear) + "<br/>";
     signif = true;
   }
   if (!signif) {
-    reply += blurbs.getBlurb(blurbs.nothingInView);
+    reply += blurbs.getBlurb(blurbs.nothingInView) + "<br/>";
   }
   reply += "<br/>";
   return reply;

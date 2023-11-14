@@ -75,7 +75,7 @@ export function processMagic(which, gameState) {
   //  return "Processing magic item " + which + ".";
 }
 
-function pickUpItem() {
+export function pickUpItem(gameState) {
   // when player picks something up
   //determine which item using location
   // add to inventory
@@ -145,11 +145,11 @@ function pickUpItem() {
   return "Picked up the ...";
 }
 
-function dropWeapon() {
+export function dropWeapon(gameState) {
   // when a play accidentally drops a weapon
 }
 
-function processAttack() {
+export function processAttack(gameState) {
   // adjust bot and player
   /*
           String damStr = ""; // damage message
@@ -180,7 +180,7 @@ function processAttack() {
   return "You attacked and did x damage.";
 }
 
-function processMovement(str) {
+export function processMovement(str, gameState) {
   /*
           if (name.equals("hero")) {
             System.out.print("You are moving ");

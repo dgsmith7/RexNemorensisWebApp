@@ -98,12 +98,14 @@ export function processMove(move, gameState) {
       reply += bot.resetForDeadBot(gameState);
       break;
     case "active": // nobody died
+      reply += maps.getLocationBlurb(gameState);
       reply += blurbs.getBlurb(blurbs.enterAMove);
       gameState.turnNumber++;
       break;
     default: // quit
       break;
   }
+
   return {
     message: `${reply}<br/>`,
     gameState: gameState,
@@ -199,7 +201,6 @@ function advance(gameState) {
   // rObj = bot.depleteBotMagic(gameState);
   // reply += rObj.message;
   // gameState = rObj.gameState;
-  reply += maps.getLocationBlurb(gameState);
   // adjust gameState and stats
   // maybe adjust history
   // tick off active magic and make calls

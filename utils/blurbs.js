@@ -192,7 +192,7 @@ Bough.`,
 ];
 export let axeInView = [
   `A heavy axe with a keen edge is stuck in a nearby stump.`,
-  `It looks like Paul Bunyon was chopping wood here.`,
+  `Based on the giant freakin' axe, it looks like Paul Bunyon was chopping wood here.`,
   `There is a big axe here, which seems to be as hefty and balanced as anything you've
 ever lifted.`,
 ];

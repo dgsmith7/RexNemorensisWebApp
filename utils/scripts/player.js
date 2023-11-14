@@ -3,79 +3,79 @@ package RexNem;
 import java.util.Scanner;
 
 public class Player {
-    public Scanner in = new Scanner(System.in);
-    public String name;
-    public boolean bot;
-    public int positCol;
-    public int positRow;
-    public int health;
-    public int attack;
-    public int shield;
-    public String weapon;
-    public String[] magicItems;
-    public int invisibility;
-    public int strength;
-    public int protection;
-    public int restoration;
-    public int speed;
-    public boolean[] turnCodes;
-    public int wins;
-    public int damage;
+    // public Scanner in = new Scanner(System.in);
+    // public String name;
+    // public boolean bot;
+    // public int positCol;
+    // public int positRow;
+    // public int health;
+    // public int attack;
+    // public int shield;
+    // public String weapon;
+    // public String[] magicItems;
+    // public int invisibility;
+    // public int strength;
+    // public int protection;
+    // public int restoration;
+    // public int speed;
+    // public boolean[] turnCodes;
+    // public int wins;
+    // public int damage;
 
-    Player(String _name, boolean _bot) {  // constructor with identifiers
-        this.name = _name;
-        this.bot = _bot;
-        if (_bot) {  // enemy in lower right (SE)
-            this.positCol = GameMap.mapCol - 1;
-            this.positRow = GameMap.mapRow - 1;
-        } else {  // hero in upper left (NW)
-            this.positCol = 0;
-            this.positRow = 0;
-        }
-        this.health = 100;
-        this.attack = 10; // fists-5 dagger-10 sword-15 axe-20
-        this.damage = 0;
-        this.shield = 0;
-        this.weapon = "dagger";
-        this.magicItems = new String[5];
-        this.invisibility = 0;
-        this.strength = 0;
-        this.protection = 0;
-        this.restoration = 0;
-        this.speed = 0;
-        this.turnCodes = new boolean[6];  // 0-incTurn 1-invis 2-strength 3-restore 4-protect 5-speed
-        this.wins = 0;
-    }
+    // Player(String _name, boolean _bot) {  // constructor with identifiers
+    //     this.name = _name;
+    //     this.bot = _bot;
+    //     if (_bot) {  // enemy in lower right (SE)
+    //         this.positCol = GameMap.mapCol - 1;
+    //         this.positRow = GameMap.mapRow - 1;
+    //     } else {  // hero in upper left (NW)
+    //         this.positCol = 0;
+    //         this.positRow = 0;
+    //     }
+    //     this.health = 100;
+    //     this.attack = 10; // fists-5 dagger-10 sword-15 axe-20
+    //     this.damage = 0;
+    //     this.shield = 0;
+    //     this.weapon = "dagger";
+    //     this.magicItems = new String[5];
+    //     this.invisibility = 0;
+    //     this.strength = 0;
+    //     this.protection = 0;
+    //     this.restoration = 0;
+    //     this.speed = 0;
+    //     this.turnCodes = new boolean[6];  // 0-incTurn 1-invis 2-strength 3-restore 4-protect 5-speed
+    //     this.wins = 0;
+    // }
 
-    public void showStatus() {  // report on inventory and status
-        System.out.println("INVENTORY AND STATUS:");
-        System.out.println("Your have " + this.health + " health points.");
-        System.out.println("Your strongest weapon is a " + this.weapon + " - each direct hit removes " + this.attack + " health from your enemy.");
-        System.out.println("Your shield (or lack thereof) provides " + this.shield + " protection from any attack.");
-        System.out.println("These are your magic items: ");
-        boolean none = true;
-        for (int i = 0; i < magicItems.length; i++) {
-            if (magicItems[i] != null) {
-                System.out.println("   Press " + (i + 1) + " to activate " + this.magicItems[i]);
-                none = false;
-            }
-        }
-        if (none) System.out.println("   none");
-        System.out.println("Active magic Items:");
-        if (this.invisibility > 0) System.out.println("   Cloak of invisibility");
-        if (this.strength > 0) System.out.println("   Gauntlet of strength");
-        if (this.restoration > 0) System.out.println("   Tincture of restoration");
-        if (this.protection > 0) System.out.println("   Ring of protection");
-        if (this.speed > 0) System.out.println("   Crown of speed");
-        int magicSum = this.invisibility + this.strength + this.restoration + this.protection + this.speed;
-        if (magicSum == 0) System.out.println("   none");
-        System.out.println("You have defeated " + wins + " challengers.");
-        if (Math.random() < 0.5) {
-            System.out.println("Your loin cloth flaps with the wind.  You blush.");
-        }
-        System.out.println();
-        Game.getReturn();
-    }
+    // public void showStatus() {  // report on inventory and status
+    //     System.out.println("INVENTORY AND STATUS:");
+    //     System.out.println("Your have " + this.health + " health points.");
+    //     System.out.println("Your strongest weapon is a " + this.weapon + " - each direct hit removes " + this.attack + " health from your enemy.");
+    //     System.out.println("Your shield (or lack thereof) provides " + this.shield + " protection from any attack.");
+    //     System.out.println("These are your magic items: ");
+    //     boolean none = true;
+    //     for (int i = 0; i < magicItems.length; i++) {
+    //         if (magicItems[i] != null) {
+    //             System.out.println("   Press " + (i + 1) + " to activate " + this.magicItems[i]);
+    //             none = false;
+    //         }
+    //     }
+    //     if (none) System.out.println("   none");
+    //     System.out.println("Active magic Items:");
+    //     if (this.invisibility > 0) System.out.println("   Cloak of invisibility");
+    //     if (this.strength > 0) System.out.println("   Gauntlet of strength");
+    //     if (this.restoration > 0) System.out.println("   Tincture of restoration");
+    //     if (this.protection > 0) System.out.println("   Ring of protection");
+    //     if (this.speed > 0) System.out.println("   Crown of speed");
+    //     int magicSum = this.invisibility + this.strength + this.restoration + this.protection + this.speed;
+    //     if (magicSum == 0) System.out.println("   none");
+    //     System.out.println("You have defeated " + wins + " challengers.");
+    //     if (Math.random() < 0.5) {
+    //         System.out.println("Your loin cloth flaps with the wind.  You blush.");
+    //     }
+    //     System.out.println();
+    //     Game.getReturn();
+    // }
 
     public void processMove(String s) { // act on instruction entered or generated
         if (name.equals("hero")) {
