@@ -19,10 +19,26 @@ app.get("/", (req, res) => {
 });
 
 app.post("/entry", async (req, res) => {
+  let rObj = {};
+  let reply = "";
   let move = req.body.move;
   let gameState = req.body.gameState;
-  let reply = game.processMove(move, gameState);
-  gameState = reply.gameState;
+  rObj = game.processPlayerMove(move, gameState);
+  reply = rObj.message;
+  gameState = rObj.gameState;
+  if (gameState.advance) {
+    game.advancePlayer();
+  } else {
+    game.handleGameState();
+  }
+  rObj = game.processBotMove(gameState);
+  reply += rObj.message;
+  gameState = rObj.gameState;
+  if (gameState.bot.advance) {
+    game.advanceBot();
+  } else {
+    game.handleGameState();
+  }
   res.send({
     move: move,
     reply: reply.message,

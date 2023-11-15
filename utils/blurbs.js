@@ -4,28 +4,6 @@ export function getBlurb(blurbArray) {
   return blurbArray[which];
 }
 
-// a list of magic items
-export let magicItems = [
-  `Cloak of invisibility`,
-  `Gauntlet of strength`,
-  `Tincture of restoration`,
-  `Ring of protection`,
-  `Crown of speed`,
-];
-
-// inventory blurbs
-export let magicInventory = [
-  `   Cloak of invisibility: Incoming attack 0 damage for 3 turns when used. Press '1' to use.`,
-  `   Gauntlet of strength: Attack force +5 for 3 turns when used. Press '2' to use.`,
-  `   Tincture of restoration: Health +5 for 3 turns when used. Press '3' to use.`,
-  `   Ring of protection: Shield +5 for 3 turns when used. Press '4' to use.`,
-  `   Crown of speed: 2x attack for three turns when used. Press '5' to use.`,
-];
-export let axe = [`Axe. Direct hits will henceforth inflict 20 damage.`];
-export let sword = [`Sword. Direct hits will henceforth inflict 15 damage.`];
-export let shield = [
-  `Shield. All hits from enemies will henceforth be reduced by 5 damage.`,
-];
 // bot using magic
 export let botUsingCloak = [`The enemy vanished into thin air.`];
 export let botUsingGauntlet = [
@@ -46,7 +24,7 @@ double damage, even with f'd a up hairdo.`,
 // player drops weapon
 export let playerDropsWeapon = [
   `You start slipping and naturally grab for something to hold onto.  As a result, your
-weapon falls into the abyss.  Back to the dagger.`,
+weapon falls into the abyss.`,
   `The cliff edge is hungry and it seems to enjoy eating weapons.  You watch sadly as
 yours falls into the abyss.`,
   `You dropped your weapon over the edge, butterfingers.  There is a lost and found
@@ -106,7 +84,7 @@ export let playerGlancingBlow = [
 ];
 export let playerDirectHits = [
   `A direct hit! The smile leaves your enemy's eyes as they stumble back.`,
-  `You feel and hear a satisfying thud as the blade of your weapon makes full and
+  `You feel and hear a satisfying thud as your weapon makes full and
 meaningful contact.`,
   `The enemy sees that you mean buiness as the direct hit knocks them straight on
 their arse.`,
@@ -119,6 +97,7 @@ like a complete badass, except that there is nobody to attack.`,
 at least you got in a quick workout.`,
 ];
 
+/////////////////////////////////////////
 // player already has item
 export let swordForSword = [
   `You already have a sword, Greed-o.`,
@@ -130,12 +109,17 @@ export let swordForAxe = [
   `You pick up the sword, then put it back down becasue there is nothing as powerful
 as this axe.`,
   `The axe is a less elegant weapon for a less civilized age.  You pass up the sword
-because nothing grinds meat and bone like this axe.`,
+because nothing grinds meat and bone like this axe you have.`,
 ];
-export let alreadyHaveShield = [
+export let alreadyHasShield = [
   `Carrying another shield will not protect you further and will only slow you down.`,
   `A warrior can only carry one shiled at a time.`,
   `Only one shield, Greed-o!`,
+];
+export let alreadyHasAxe = [
+  `You already have an Axe, you blood-thirsty maniac.`,
+  `A warrior can only handle one of these heavy axes at a time.`,
+  `Easy killer - only one weapon at time.  You already have the best one.`,
 ];
 
 // nothing to get
@@ -144,16 +128,37 @@ export let nothingHere = [
   `You pick up the nothingness and it doesn't help in any way.`,
   `If only you could get something when there is nothing to get.`,
 ];
+// a list of magic items
+export let magicItems = [
+  `Cloak of invisibility`,
+  `Gauntlet of strength`,
+  `Tincture of restoration`,
+  `Ring of protection`,
+  `Crown of speed`,
+];
 
-/*
-You picked up the ` + item + ` Press I for inventory.
-The enemy picked up the ` + item + `. Oh, snap!
-top + ` struck with the ` + pri.weapon + ` inflicting ` + finalDamage + ` points damage, ` + magicStuff
-Your health is ` + protagonist.health + `. The enemy's health is ` + enemy.health
-You have defeated ` + protagonist.wins + ` challengers.
-*/
+// inventory blurbs
+export let magicInventory = [
+  `   Cloak of invisibility: Incoming attack 0 damage for 3 turns when used. Press '1' to use.`,
+  `   Gauntlet of strength: Attack force +5 for 3 turns when used. Press '2' to use.`,
+  `   Tincture of restoration: Health +5 for 3 turns when used. Press '3' to use.`,
+  `   Ring of protection: Shield +5 for 3 turns when used. Press '4' to use.`,
+  `   Crown of speed: 2x attack for three turns when used. Press '5' to use.`,
+];
+export let axe = [
+  `battle axe. Direct hits will henceforth inflict 20 damage. Naturally, You 
+immediately flip it around and start acting like Tony Iiomi.`,
+  `battle axe. Direct hits will henceforth inflict 20 damage. You long for a mirror because 
+you feel like a guy from a Molly Hatchet album cover.`,
+  `battle axe. Direct hits will henceforth inflict 20 damage. You silently wonder if your 
+  loin cloth would clash with your flannel, suspenders, and spiky boots`,
+];
+export let sword = [`sword. Direct hits will henceforth inflict 15 damage.`];
+export let shield = [
+  `shield. All hits from enemies will henceforth be reduced by 5 damage.`,
+];
+export let map = [`paper.  It's a map!  Press M to view.`];
 
-/////////////////////////////////////////
 // enemy near
 export let enemyNear = [
   `Your adreneline surges as you sense the closeness of your enemy.`,
@@ -167,7 +172,7 @@ export let cloakInView = [
   `A scarlet swatch of velvet laying in the dirt catches your eye.`,
   `The claok of invisibility falls into view.`,
 ];
-export let guntletInView = [
+export let gauntletInView = [
   `A metal glove hangs from a golden bough of a nearby dead tree.`,
   `A glove lays on the ground here with an extended middle finger.`,
   `'Shaka, brah', says a glove on the ground with the extended pinky and thumb.`,
@@ -191,9 +196,9 @@ export let crownInView = [
 Bough.`,
 ];
 export let axeInView = [
-  `A heavy axe with a keen edge is stuck in a nearby stump.`,
+  `A heavy battle axe with a keen edge is stuck in a nearby stump.`,
   `Based on the giant freakin' axe, it looks like Paul Bunyon was chopping wood here.`,
-  `There is a big axe here, which seems to be as hefty and balanced as anything you've
+  `There is a big double-edged battle axe here, which seems to be as hefty and balanced as anything you've
 ever lifted.`,
 ];
 export let swordInView = [
@@ -305,10 +310,11 @@ are stronger than you were before putting it on.`,
 and skin turning green.  Mr. McGee, dont make me angry.  You wouldn't like me when I'm
 angry.`,
 ];
-export let playerUsingTincutre = [
+export let playerUsingTincture = [
   `You drink deeply. This is better than the immuno-boost at Jamba Juice. You health
 begins to build.`,
-  `Ahhhhh! The tincture kicked in, increasing your health now`,
+  `Gulp, gulp, gulp!, You feel pumped like a roid-soaked gym rat.  Enjoy the health
+boost while it lasts.`,
   `As you imbibe the fluid, you feel like there are lighting bolts shooting from every
 orifice on your body.  But this isn't really happening, its just your ego.  What's
 really happening is that your health is increased for a while.`,
@@ -475,7 +481,7 @@ export let help = [
      |  Rows run from 0 West to 7 East, and Columns run from 0 North to 7 South  |
      |                                                                           |
      |        These moves do not cost a turn (enemy move does not follow):       |
-     |              H-Help    I-Inventory & status  M-Map     Q-Quit             |
+     |              H-Help    I-Inventory & status    M-Map   Q-Quit             |
      |           There are others ??? injected purely for entertainment          |
      |                                                                           |
      |     These moves cost one turn (enemy gets move immediately following):    |
@@ -579,3 +585,5 @@ export let song = [
   `Yo-ho-ho-ho, a pirate's life for me.  (Oops, wrong adventure).`,
   `I'm a priest who sings a song, until another comes along...`,
 ];
+
+export let rules = [`this will be a more verbose explantion of game.`];

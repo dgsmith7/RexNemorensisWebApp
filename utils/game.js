@@ -4,7 +4,7 @@ import * as player from "./player.js";
 import * as bot from "./bot.js";
 import badwordsArray from "badwords";
 
-export function processMove(move, gameState) {
+export function processMovePlayer(move, gameState) {
   let reply = "";
   let rObj = {};
   gameState.advance = true;
@@ -28,14 +28,13 @@ export function processMove(move, gameState) {
       gameState.mode = "quit";
       gameState.gameOver = true;
       gameState.advance = false;
-      reply = handleQuit();
       break;
     case "1": // magic item - cloak of invisibility
     case "2": // magic item - gauntlet of strength
     case "3": // magic item - tincture of restoration
     case "4": // magic item - ring of protection
     case "5": // magic item - crown of speed
-      rObj = player.processMagic(
+      rObj = player.processMagicPlayer(
         parseInt(move.replace(/[^0-9]/g, "")),
         gameState
       );
@@ -43,16 +42,23 @@ export function processMove(move, gameState) {
       gameState = rObj.gameState;
       break;
     case "g": // get
-      reply = player.pickUpItem(gameState);
+      rObj = player.pickUpItem(gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
       break;
     case "a": // attack
-      reply = player.processAttack(gameState);
+      rObj = player.processAttackPlayer(gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
+      gameState.player.justAttacked = true;
       break;
     case "n": // move
     case "s":
     case "e":
     case "w":
-      reply = player.processMovement(move, gameState);
+      rObj = player.processMovementPlayer(move, gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
       break;
     case "m":
       reply = maps.displayMap(gameState);
@@ -80,6 +86,10 @@ export function processMove(move, gameState) {
     case "don loin cloth":
       reply = blurbs.getBlurb(blurbs.clothed) + "<br/>";
       break;
+    case "r":
+    case "rules":
+      reply = blurbs.rules[0] + "<br/>";
+      break;
     default:
       isSwearWord(move)
         ? (reply = blurbs.getBlurb(blurbs.profanityReply) + "<br/>")
@@ -87,34 +97,170 @@ export function processMove(move, gameState) {
       gameState.advance = false;
       break;
   }
-  if (gameState.advance) reply += advance(gameState);
-  checkForVictor(gameState);
-  switch (gameState.mode) {
-    case "player-died":
-      reply += player.resetForDeadPlayer(gameState);
-      gameState.gameOver = true;
-      break;
-    case "bot-died":
-      reply += bot.resetForDeadBot(gameState);
-      break;
-    case "active": // nobody died
-      reply += maps.getLocationBlurb(gameState);
-      reply += blurbs.getBlurb(blurbs.enterAMove);
-      gameState.turnNumber++;
-      break;
-    default: // quit
-      break;
-  }
-
   return {
     message: `${reply}<br/>`,
     gameState: gameState,
   };
 }
 
-export function processBotMove(gameState) {
+export function advancePlayer(gameState) {
+  let reply = "";
+  if (gameState.player.justAttacked) {
+    gameState.player.justAttacked = false;
+    let finalDamage = gameState.player.damage;
+    let magicString = ` while using the following magic items: \n`;
+    if (gameState.player.invisibilityTurnsRemain) {
+      // invis player
+      magicStuff += `   The Cloak of Invisibilty (${gameState.player.invisibility}) turns remaining.\n`;
+    }
+    if (gameState.bot.invisibilityTurnsRemain) {
+      // invis bot
+      finalDamage = 0;
+    }
+    if (gameState.player.strengthTurnsRemain) {
+      // strength
+      finalDamage += 5;
+      magicStuff += `   The Gauntlet of Strength (${gameState.player.strength}) turns remaining.\n`;
+    }
+    if (gameState.player.restorationTurnsRemain) {
+      // restoration
+      magicStuff += `   The Tincture of Restoration (${gameState.player.restoration}) turns remaining.\n`;
+      // restoration handled below
+    }
+    if (gameState.player.protectionTurnsRemain) {
+      // protection
+      magicStuff += `   The Ring of Protection (${gameState.player.protection}) turns remaining.\n`;
+      // shield handled below
+    }
+    if (gameState.player.speedTurnsRemain) {
+      // speed
+      finalDamage *= 2;
+      magicStuff += `   The Crown of Speed (${gameState.player.speed}) turns remaining.\n`;
+    }
+    if (magicString == ` while using the following magic items: \n`) {
+      magicStuff += `   The loin cloth of fortitude (always on - well, almost always).\n`;
+    }
+
+    if (maps.nearEachOther()) {
+      // if player are within strike range of one another calculate and apply damage
+      finalDamage -= gameState.bot.shield; // adjust for receiver shield
+      if (finalDamage < 0) {
+        // constrain so we aren't adding points back on attacks
+        finalDamage = 0;
+      }
+      gameState.bot.health -= finalDamage; // apply the damage
+      // messaging
+      reply += `You struck with the ${gameState.player.weapon} inflicting ${finalDamage} points damage, ${magicStuff}\n`;
+      reply += `Your health is ${gameState.player.health}. The enemy's health is ${gameState.bot.health}\n`;
+    }
+  }
+  player.depleteMagicPlayer();
+  checkForVictor(gameState);
   return {
     message: "This is the narrative from the enemy move.<br/>",
+    gameState: gameState,
+  };
+}
+
+export function processMoveBot(gameState) {
+  let move = bot.generateBotMove();
+  let reply = "";
+  let rObj = {};
+  gameState.advance = true;
+  switch (move.toString()) {
+    case "1": // magic item - cloak of invisibility
+    case "2": // magic item - gauntlet of strength
+    case "3": // magic item - tincture of restoration
+    case "4": // magic item - ring of protection
+    case "5": // magic item - crown of speed
+      rObj = player.processMagicBot(
+        parseInt(move.replace(/[^0-9]/g, "")),
+        gameState
+      );
+      reply = rObj.message;
+      gameState = rObj.gameState;
+      break;
+    case "g": // get
+      rObj = player.pickUpItemBot(gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
+      break;
+    case "a": // attack
+      rObj = player.processAttackBot(gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
+      gameState.bot.justAttacked = true;
+      break;
+    case "n": // move
+    case "s":
+    case "e":
+    case "w":
+      rObj = player.processMovementBoot(move, gameState);
+      reply = rObj.message;
+      gameState = rObj.gameState;
+      break;
+  }
+  return {
+    message: "This is the narrative from the enemy move.<br/>", //reply,
+    gameState: gameState,
+  };
+}
+
+export function advanceBot(gameState) {
+  let reply = "";
+  if (gameState.bot.justAttacked) {
+    gameState.bot.justAttacked = false;
+    let finalDamage = gameState.bot.damage;
+    let magicString = ` while using the following magic items: \n`;
+    if (gameState.bot.invisibilityTurnsRemain) {
+      // invis player
+      magicStuff += `   The Cloak of Invisibilty.\n`;
+    }
+    if (gameState.player.invisibilityTurnsRemain) {
+      // invis bot
+      finalDamage = 0;
+    }
+    if (gameState.bot.strengthTurnsRemain) {
+      // strength
+      finalDamage += 5;
+      magicStuff += `   The Gauntlet of Strength.\n`;
+    }
+    if (gameState.bot.restorationTurnsRemain) {
+      // restoration
+      magicStuff += `   The Tincture of Restoration.\n`;
+      // restoration handled below
+    }
+    if (gameState.bot.protectionTurnsRemain) {
+      // protection
+      magicStuff += `   The Ring of Protection.\n`;
+      // shield handled below
+    }
+    if (gameState.bot.speedTurnsRemain) {
+      // speed
+      finalDamage *= 2;
+      magicStuff += `   The Crown of Speed.\n`;
+    }
+    if (magicString == ` while using the following magic items: \n`) {
+      magicStuff += "   none.\n";
+    }
+
+    if (maps.nearEachOther()) {
+      // if player are within strike range of one another calculate and apply damage
+      finalDamage -= gameState.player.shield; // adjust for receiver shield
+      if (finalDamage < 0) {
+        // constrain so we aren't adding points back on attacks
+        finalDamage = 0;
+      }
+      gameState.player.health -= finalDamage; // apply the damage
+      // messaging
+      reply += `Your enemy struck with the ${gameState.bot.weapon} inflicting ${finalDamage} points damage, ${magicStuff}\n`;
+      reply += `Your health is ${gameState.player.health}. The enemy's health is ${gameState.bot.health}\n`;
+    }
+  }
+  bot.depleteMagicBot();
+  checkForVictor(gameState);
+  return {
+    message: "This is the narrative from the enemy move.<br/>", //reply,
     gameState: gameState,
   };
 }
@@ -125,11 +271,13 @@ export function initialize(gameState) {
     player: {
       position: [0, 0], // upper left; column, row
       health: 100, // int
-      attack: 10, // fists-5 dagger-10 sword-15 axe-20
-      damage: 0, // int
+      attack: 10, // fist-5 dagger-10 sword-15 axe-20
       shield: 0, // int
+      hasShield: false,
+      hasSword: false,
+      hasDagger: false,
       hasMap: true, //false,
-      weapon: "dagger", // fists-5 dagger-10 sword-15 axe-20
+      weapon: "dagger", // fist-5 dagger-10 sword-15 axe-20
       magicItems: ["Cloak of Invisibility", "", "", "", ""],
       invisibility: 0,
       invisTurnsRemain: true,
@@ -141,17 +289,19 @@ export function initialize(gameState) {
       restorationTurnsRemain: false,
       speed: 0,
       speedTurnsRemain: false,
-      advance: false,
+      justAttacked: false,
       wins: 0,
     },
     bot: {
       position: [12, 12], // lower right; column, row
       health: 100, // int
-      attack: 10, // fists-5 dagger-10 sword-15 axe-20
-      damage: 10, // int
+      attack: 10, // fist-5 dagger-10 sword-15 axe-20
       shield: 0, // int
+      hasShield: false,
+      hasSword: false,
+      hasDagger: true,
       hasMap: false,
-      weapon: "dagger", // fists-5 dagger-10 sword-15 axe-20
+      weapon: "dagger", // fist-5 dagger-10 sword-15 axe-20
       magicItems: ["", "", "", "", ""],
       invisibility: 0,
       invisTurnsRemain: 0,
@@ -163,9 +313,10 @@ export function initialize(gameState) {
       restorationTurnsRemain: 0,
       speed: 0,
       speedTurnsRemain: 0,
-      advance: false,
+      justAttacked: false,
       wins: 0,
     },
+    advance: true,
     map: maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
     mode: "active", // active, bot-died, player-died, quit
     replay: true,
@@ -181,36 +332,41 @@ export function initialize(gameState) {
 export function checkForVictor(gameState) {
   if (gameState.player.health <= 0) {
     gameState.mode = "player-died";
+    gameState.gameOver = true;
+    gameState.advance = false;
   }
   if (gameState.bot.health <= 0) {
     gameState.mode = "bot-died";
+    gameState.gameOver = true;
+    gameState.advance = false;
   }
   return gameState;
 }
 
-function advance(gameState) {
-  let reply = "";
-  let rObj = {};
-  rObj = player.depletePlayerMagic(gameState);
-  reply += rObj.message;
-  gameState = rObj.gameState;
-  rObj = processBotMove(gameState);
-  reply += rObj.message;
-  gameState = rObj.gameState;
-  gameState = bot.depleteBotMagic(gameState);
-  // rObj = bot.depleteBotMagic(gameState);
-  // reply += rObj.message;
-  // gameState = rObj.gameState;
-  // adjust gameState and stats
+// handle game mode
+function handleGameMode(gameState) {
+  switch (gameState.mode) {
+    case "player-died":
+      reply += player.resetForDeadPlayer(gameState);
+      gameState.gameOver = true;
+      break;
+    case "bot-died":
+      reply += bot.resetForDeadBot(gameState);
+      break;
+    case "quit":
+      reply += blurbs.getBlurb(blurbs.quitMessage) + "<br/>";
+      break;
+    case "active": // nobody died
+      reply += maps.getLocationBlurb(gameState);
+      reply += blurbs.getBlurb(blurbs.enterAMove);
+      if (gameState.advance) {
+        gameState.turnNumber++;
+      }
+      break;
+    default: // quit
+      break;
+  }
   // maybe adjust history
-  // tick off active magic and make calls
-  return reply;
-}
-
-function handleQuit(gameState) {
-  // save to sql or file when able
-  // show message and flash title
-  return blurbs.getBlurb(blurbs.quitMessage) + "<br/>";
 }
 
 function isSwearWord(str) {

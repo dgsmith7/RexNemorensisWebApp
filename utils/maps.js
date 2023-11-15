@@ -2,7 +2,7 @@ import * as blurbs from "./blurbs.js";
 
 export function loadWeaponsAndMagic(gameState) {
   // map codes for item pass: A - axe, S - sword, D - shield, M - Map. 12345 - magical items
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 8; i++) {
     // add 7 items
     let col = parseInt(Math.random() * gameState.map[0].length);
     let row = parseInt(Math.random() * gameState.map.length);
@@ -14,17 +14,17 @@ export function loadWeaponsAndMagic(gameState) {
     if (i == 0) {
       // axe
       gameState.map[row] = replaceChar(col, gameState.map[row], "A");
-    } else if (i <= 2) {
+    } else if (i == 1 || i == 2) {
       // 2 swords
       gameState.map[row] = replaceChar(col, gameState.map[row], "S");
     } else if (i == 3) {
-      // shield
+      // 1 shield
       gameState.map[row] = replaceChar(col, gameState.map[row], "D");
     } else if (i == 4) {
-      // map
+      // 1 map
       gameState.map[row] = replaceChar(col, gameState.map[row], "M");
     } else {
-      // 2 random magic items
+      // 3 random magic items
       gameState.map[row] = replaceChar(
         col,
         gameState.map[row],
@@ -36,7 +36,7 @@ export function loadWeaponsAndMagic(gameState) {
   return gameState;
 }
 
-function replaceChar(index, str, char) {
+export function replaceChar(index, str, char) {
   let newStr = "";
   for (let i = 0; i < str.length; i++) {
     if (i == index) {
@@ -58,7 +58,7 @@ export function displayMap(gameState) {
     });
     reply += "<br/>";
   } else {
-    reply = getBlurb(blurbs.playerNoHave) + "<br/>";
+    reply = blurbs.getBlurb(blurbs.playerNoHave) + "<br/>";
   }
   return reply;
 }
@@ -81,17 +81,16 @@ export function getLocationBlurb(gameState) {
   let row = gameState.player.position[1];
   let colMax = gameState.map.length - 1;
   let rowMax = gameState.map[0].length - 1;
-  console.log(col, row, colMax, rowMax);
-  if (col != 0) {
+  if (col > 0) {
     wChar = gameState.map[row].charAt(col - 1);
   }
-  if (col != colMax) {
+  if (col < colMax) {
     eChar = gameState.map[row].charAt(col + 1);
   }
-  if (row != 0) {
+  if (row > 0) {
     nChar = gameState.map[row - 1].charAt(col);
   }
-  if (row != rowMax) {
+  if (row < rowMax) {
     sChar = gameState.map[row + 1].charAt(col);
   }
   // holes
@@ -107,13 +106,13 @@ export function getLocationBlurb(gameState) {
   if (row == 0) {
     reply += blurbs.getBlurb(blurbs.edgeNorth) + "<br/>";
   }
-  if (row == 7) {
+  if (row == rowMax) {
     reply += blurbs.getBlurb(blurbs.edgeSouth) + "<br/>";
   }
   if (col == 0) {
     reply += blurbs.getBlurb(blurbs.edgeWest) + "<br/>";
   }
-  if (col == 7) {
+  if (col == colMax) {
     reply += blurbs.getBlurb(blurbs.edgeEast) + "<br/>";
   }
   // magic items
@@ -126,11 +125,11 @@ export function getLocationBlurb(gameState) {
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "3") {
-    reply += blurbs.getBlurb(blurbs.ringInView) + "<br/>";
+    reply += blurbs.getBlurb(blurbs.tinctureInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "4") {
-    reply += blurbs.getBlurb(blurbs.tinctureInView) + "<br/>";
+    reply += blurbs.getBlurb(blurbs.ringInView) + "<br/>";
     signif = true;
   }
   if (gameState.map[row].charAt(col) == "5") {
@@ -167,10 +166,10 @@ export function getLocationBlurb(gameState) {
   return reply;
 }
 
-function nearEachOther(gameState) {
+export function nearEachOther(gameState) {
   return (
     Math.abs(gameState.player.position[0] - gameState.bot.position[0]) <= 1 &&
-    Math.abs(gameState.player.postion[1] - gameState.bot.postion[1]) <= 1
+    Math.abs(gameState.player.position[1] - gameState.bot.position[1]) <= 1
   );
 }
 
@@ -329,18 +328,18 @@ export let layouts = [
 
 export let testMap = [
   [
-    `ABBBBBBBBBBBB`,
-    `BWWWWWWWWWWWB`,
-    `BBBBBBBBBBBWB`,
-    `BWWWWWWWWWBWB`,
-    `BWBBBBBBBWBWB`,
-    `BWBWWWWWBWBWB`,
-    `BWBWBBHWBWBWB`,
-    `BWBWBWWWBWBWB`,
-    `BWBWBBBBBWBWB`,
-    `BWBWWWWWWWBWB`,
+    `BBBBBBBBBBBBB`,
+    `BWWWWWBWWWWWB`,
     `BWBBBBBBBBBWB`,
-    `BWWWWWWWWWWWB`,
+    `BWWWWWWWWBWWB`,
+    `BWBBBBBBBBBWB`,
+    `BWWWWWBBBBBWB`,
+    `BBBBBWBHBWWWB`,
+    `BBBWBBBBBBBBB`,
+    `BBBWBWWWWBBBB`,
+    `BBBWBBBWBBHBB`,
+    `BBBWBBBWBBBBB`,
+    `BBBHBBBWWWWBB`,
     `BBBBBBBBBBBBB`,
   ],
 ];
