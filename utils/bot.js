@@ -1,8 +1,9 @@
-export function generateBotMove(gameState) {
-  //return "g";
+import * as blurbs from "./blurbs.js";
+import * as maps from "./maps.js";
 
+export function generateBotMove(gameState) {
   let dir = getSafeDir(gameState);
-  if (game.nearEachOther()) {
+  if (maps.nearEachOther()) {
     // if enemy in strike distance
     if (gameState.bot.health >= 50) {
       // attack if health above 50
@@ -55,14 +56,14 @@ function getSafeDir(gameState) {
       else...not on an edge
           check for a wall - if wall mark unsafe
    */
-  let col = gameState.player.position[0];
-  let row = gameState.player.position[1];
+  let col = gameState.bot.position[0];
+  let row = gameState.bot.position[1];
   let dir = "N";
-  dir = getRandomDir(gameState, dir);
+  dir = getRandomDir(dir);
   let safe = false;
   while (!safe) {
     safe = true; // assume its a good direction unless proven otherwise below
-    dir = getRandomDir(gameState, dir);
+    dir = getRandomDir(dir);
     if (
       col == 0 ||
       col == gameState.map.length - 1 ||
@@ -84,7 +85,7 @@ function getSafeDir(gameState) {
   return dir;
 }
 
-function getRandomDir(gameState, dir) {
+function getRandomDir(dir) {
   // bot getting initial direction during move process
   switch (parseInt(Math.random() * 4)) {
     case 0:

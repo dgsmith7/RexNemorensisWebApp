@@ -570,14 +570,26 @@ export let titleText1 = `
 /_/  \\//___//__/ \\/  /_/  \\/____/_/  /_/\\___/_/  \\//____/_/  \\/_____/_/_____/\n
 Rex Nemorensis - a text adventure game     Copyright(c) 2023 - David G. Smith
 
-     Those trees in whose dim shadow
-     The ghastly priest doth reign
-     The priest who slew the slayer,
-     And shall himself be slain.
-                         --McCaulay
-
-
-Press RETURN to play\n`;
+                                       ######################################
+                                       #                                    #
+                                       #          \\              /          #
+     Those trees in whose dim shadow   #           \\\\          //           #
+     The ghastly priest doth reign     #       +---\\\\\\--------///---+       #
+     The priest who slew the slayer,   #       |. . \\\\\\ .  . /// . .|       #
+     And shall himself be slain.       #       | . . \\\\\\ .. /// . . |       #
+                         --McCaulay    #       |. . . \\\\\\  /// . . .|       #
+                                       #       | . . . \\\\\\/// . . . |       #
+                                       #       |. . . . \\\\\\/ . . . .|       #
+Press RETURN to play                   #       | . . . ./\\\\\\. . . . |       #
+                                       #        \\ . . .///\\\\\\. . . /        #
+                                       #         \\ \\\\ ///  \\\\\\ // /         #
+                                       #          \\ \\\\// .. \\\\// /          #
+                                       #           -/\\\\------//\\            #
+                                       #           // \\\\    // \\\\           #
+                                       #          //            \\\\          #
+                                       #                                    #
+                                       ######################################
+`;
 
 // lyrics
 export let song = [

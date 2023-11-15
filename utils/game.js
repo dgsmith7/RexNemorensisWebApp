@@ -163,7 +163,7 @@ export function advancePlayer(gameState) {
 }
 
 export function processMoveBot(gameState) {
-  let move = bot.generateBotMove();
+  let move = bot.generateBotMove(gameState);
   let reply = "";
   let rObj = {};
   gameState.advance = true;
@@ -343,8 +343,8 @@ export function checkForVictor(gameState) {
   return gameState;
 }
 
-// handle game mode
-function handleGameMode(gameState) {
+export function handleGameMode(gameState) {
+  let reply = "";
   switch (gameState.mode) {
     case "player-died":
       reply += player.resetForDeadPlayer(gameState);
@@ -367,6 +367,7 @@ function handleGameMode(gameState) {
       break;
   }
   // maybe adjust history
+  return { message: reply, gameState: gameState };
 }
 
 function isSwearWord(str) {
