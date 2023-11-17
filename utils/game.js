@@ -14,7 +14,7 @@ export function processMovePlayer(move, gameState) {
       gameState = initialize(gameState);
       gameState = maps.loadWeaponsAndMagic(gameState);
       reply = blurbs.intro;
-      gameState.advance = false; // don't count as a turn
+      gameState.advance = true; // don't count as a turn
       break;
     case "h": // help
       reply = blurbs.help;
@@ -34,6 +34,7 @@ export function processMovePlayer(move, gameState) {
     case "3": // magic item - tincture of restoration
     case "4": // magic item - ring of protection
     case "5": // magic item - crown of speed
+      gameState.advance = true;
       rObj = player.processMagicPlayer(
         parseInt(move.replace(/[^0-9]/g, "")),
         gameState
@@ -42,11 +43,13 @@ export function processMovePlayer(move, gameState) {
       gameState = rObj.gameState;
       break;
     case "g": // get
+      gameState.advance = true;
       rObj = player.pickUpItem(gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
       break;
     case "a": // attack
+      gameState.advance = true;
       rObj = player.processAttackPlayer(gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
@@ -56,6 +59,7 @@ export function processMovePlayer(move, gameState) {
     case "s":
     case "e":
     case "w":
+      gameState.advance = true;
       rObj = player.processMovementPlayer(move, gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
@@ -72,22 +76,26 @@ export function processMovePlayer(move, gameState) {
       reply = blurbs.getBlurb(blurbs.song) + "<br/>";
       break;
     case "poem":
+      gameState.advance = false;
       reply = blurbs.getBlurb(blurbs.poem) + "<br/>";
       break;
     case "remove loin cloth":
     case "doff loin cloth":
     case "get naked":
     case "strip":
+      gameState.advance = false;
       reply = blurbs.getBlurb(blurbs.nakedness) + "<br/>";
       break;
     case "get dressed":
     case "wear loin cloth":
     case "put on loin cloth":
     case "don loin cloth":
+      gameState.advance = false;
       reply = blurbs.getBlurb(blurbs.clothed) + "<br/>";
       break;
     case "r":
     case "rules":
+      gameState.advance = false;
       reply = blurbs.rules[0] + "<br/>";
       break;
     default:
@@ -154,7 +162,7 @@ export function advancePlayer(gameState) {
       reply += `Your health is ${gameState.player.health}. The enemy's health is ${gameState.bot.health}\n`;
     }
   }
-  player.depleteMagicPlayer();
+  player.depleteMagicPlayer(gameState);
   checkForVictor(gameState);
   return {
     message: "This is the narrative from the enemy move.<br/>",
@@ -163,7 +171,9 @@ export function advancePlayer(gameState) {
 }
 
 export function processMoveBot(gameState) {
+  console.log("processing bot move");
   let move = bot.generateBotMove(gameState);
+  console.log("Generated move is: ", move);
   let reply = "";
   let rObj = {};
   gameState.advance = true;
@@ -173,6 +183,7 @@ export function processMoveBot(gameState) {
     case "3": // magic item - tincture of restoration
     case "4": // magic item - ring of protection
     case "5": // magic item - crown of speed
+      gameState.advance = true;
       rObj = player.processMagicBot(
         parseInt(move.replace(/[^0-9]/g, "")),
         gameState
@@ -181,12 +192,14 @@ export function processMoveBot(gameState) {
       gameState = rObj.gameState;
       break;
     case "g": // get
-      rObj = player.pickUpItemBot(gameState);
+      gameState.advance = true;
+      rObj = bot.pickUpItemBot(gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
       break;
     case "a": // attack
-      rObj = player.processAttackBot(gameState);
+      gameState.advance = true;
+      rObj = bot.processAttackBot(gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
       gameState.bot.justAttacked = true;
@@ -195,7 +208,8 @@ export function processMoveBot(gameState) {
     case "s":
     case "e":
     case "w":
-      rObj = player.processMovementBoot(move, gameState);
+      gameState.advance = true;
+      rObj = bot.processMovementBot(move, gameState);
       reply = rObj.message;
       gameState = rObj.gameState;
       break;
@@ -217,7 +231,7 @@ export function advanceBot(gameState) {
       magicStuff += `   The Cloak of Invisibilty.\n`;
     }
     if (gameState.player.invisibilityTurnsRemain) {
-      // invis bot
+      // invis player so cant strike
       finalDamage = 0;
     }
     if (gameState.bot.strengthTurnsRemain) {
@@ -257,7 +271,7 @@ export function advanceBot(gameState) {
       reply += `Your health is ${gameState.player.health}. The enemy's health is ${gameState.bot.health}\n`;
     }
   }
-  bot.depleteMagicBot();
+  bot.depleteMagicBot(gameState);
   checkForVictor(gameState);
   return {
     message: "This is the narrative from the enemy move.<br/>", //reply,
@@ -316,7 +330,7 @@ export function initialize(gameState) {
       justAttacked: false,
       wins: 0,
     },
-    advance: true,
+    advance: false,
     map: maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
     mode: "active", // active, bot-died, player-died, quit
     replay: true,
@@ -344,6 +358,7 @@ export function checkForVictor(gameState) {
 }
 
 export function handleGameMode(gameState) {
+  console.log("Handling game mode");
   let reply = "";
   switch (gameState.mode) {
     case "player-died":

@@ -3,11 +3,12 @@ import * as maps from "./maps.js";
 
 export function generateBotMove(gameState) {
   let dir = getSafeDir(gameState);
-  if (maps.nearEachOther()) {
+  console.log("Safe dir - ", dir);
+  if (maps.nearEachOther(gameState)) {
     // if enemy in strike distance
     if (gameState.bot.health >= 50) {
       // attack if health above 50
-      return "A"; // attack
+      return "a"; // attack
     } else if (gameState.bot.health >= 20) {
       // if between 20 and 50 use magic first then attack
       if (gameState.bot.magicItems[0] != null) {
@@ -21,7 +22,7 @@ export function generateBotMove(gameState) {
       } else if (gameState.bot.magicItems[4] != null) {
         return "5";
       } else {
-        return "A"; // no more magic to invoke - start attacking again
+        return "a"; // no more magic to invoke - start attacking again
       }
     } else {
       // if lower than 20 run away
@@ -29,14 +30,15 @@ export function generateBotMove(gameState) {
     }
     // or if there is nobody to attack and there is something to pick up, do it
   } else if (
-    "ASD12345".contains(
-      gameState.map[gameState.bot.positRow]
-        .charAt(gameState.bot.positCol)
-        .toString()
+    "asd12345".includes(
+      gameState.map[gameState.bot.position[1]].charAt(gameState.bot.position[0])
     )
   ) {
+    console.log(
+      gameState.map[gameState.bot.position[1]].charAt(gameState.bot.position[0])
+    );
     // something to get
-    return "G";
+    return "g";
   } else {
     // otherwise just move
     return dir;
@@ -58,12 +60,12 @@ function getSafeDir(gameState) {
    */
   let col = gameState.bot.position[0];
   let row = gameState.bot.position[1];
-  let dir = "N";
-  dir = getRandomDir(dir);
+  let dir = "n";
+  //getRandomDir(dir);
   let safe = false;
   while (!safe) {
-    safe = true; // assume its a good direction unless proven otherwise below
     dir = getRandomDir(dir);
+    safe = true; // assume its a good direction unless proven otherwise below
     if (
       col == 0 ||
       col == gameState.map.length - 1 ||
@@ -72,33 +74,41 @@ function getSafeDir(gameState) {
     ) {
       // on a cliff edge
       let probSure = Math.random() * 10; // determine if I should check if Im near a ledge
+      console.log("prob sure - ", probSure);
       if (probSure < 9.8) {
         // check for a potential fall only 98 % of the time - sometimes enemy falls off
         safe = !edgeFall(gameState, dir);
+        console.log("edgefall safe? ", safe);
       }
       safe = safe && edgeWall(gameState, dir); // combine the two checks above without overriding one
+      console.log("Edgewall safe? ", safe);
     } else {
       // not on an edge
+      //console.log("Not on Edge, RandomDir: ", dir);
+
       safe = nonEdgeWall(gameState, dir);
+      console.log("non edge wall safe? ", safe);
     }
   }
+  console.log("safe - ", dir);
   return dir;
 }
 
 function getRandomDir(dir) {
   // bot getting initial direction during move process
-  switch (parseInt(Math.random() * 4)) {
+  let randomDir = parseInt(Math.random() * 4);
+  switch (randomDir) {
     case 0:
-      dir = "N";
+      dir = "n";
       break;
     case 1:
-      dir = "E";
+      dir = "e";
       break;
     case 2:
-      dir = "S";
+      dir = "s";
       break;
     case 3:
-      dir = "W";
+      dir = "w";
       break;
   }
   return dir;
@@ -118,65 +128,63 @@ function edgeWall(gameState, dir) {
   or if you are not on the south edge and (dir is s and the string is not wall) then move is safe
   or if you are not on the north edge and (dir is n and the string is not wall) then move is safe
    */
-  let col = gameState.player.position[0];
-  let row = gameState.player.position[1];
+  let col = gameState.bot.position[0];
+  let row = gameState.bot.position[1];
   let colMax = gameState.map.length - 1;
   let rowMax = gameState.map[0].length - 1;
-  return (
-    (col == colMax &&
-      dir == "W" &&
-      !gameState.map[row].charAt(col - 1).toString() == "W") ||
-    (col == 0 &&
-      dir == "E" &&
-      !gameState.map[row].charAt(col + 1).toString() == "W") ||
+  console.log("this - ", gameState.map[row].charAt(col - 1));
+  console.log("dir before ", dir);
+  let isEdgeWall =
+    (col == colMax && // east edge
+      dir == "w" && // moving w
+      gameState.map[row].charAt(col - 1) != "W") || //next west not wall
+    (col == 0 && dir == "e" && gameState.map[row].charAt(col + 1) != "W") ||
     (row == rowMax &&
-      dir == "N" &&
-      !gameState.map[row - 1].charAt(col).toString() == "W") ||
-    (row == 0 &&
-      dir == "S" &&
-      !gameState.map[row + 1].charAt(col).toString() == "W") ||
+      dir == "n" &&
+      gameState.map[row - 1].charAt(col) != "W") ||
+    (row == 0 && dir == "s" && gameState.map[row + 1].charAt(col) != "W") ||
     (col != colMax &&
-      dir == "E" &&
-      !gameState.map[row].charAt(col + 1).toString() == "W") ||
-    (col != 0 &&
-      dir == "W" &&
-      !gameState.map[row].charAt(col - 1).toString() == "W") ||
+      dir == "e" &&
+      gameState.map[row].charAt(col + 1) != "W") ||
+    (col != 0 && dir == "w" && gameState.map[row].charAt(col - 1) != "W") ||
     (row != rowMax &&
-      dir == "S" &&
-      !gameState.map[row + 1].charAt(col).toString() == "W") ||
-    (row != 0 &&
-      dir == "N" &&
-      !gameState.map[row - 1].charAt(col).toString() == "W")
-  );
+      dir == "s" &&
+      gameState.map[row + 1].charAt(col) != "W") ||
+    (row != 0 && dir == "n" && gameState.map[row - 1].charAt(col) != "W");
+  console.log("in edge WALL", isEdgeWall);
+  return isEdgeWall;
 }
 
 function nonEdgeWall(gameState, dir) {
   // bot checking for walls when not at edge of mesa
+  console.log("in NON edge wall");
   let col = gameState.player.position[0];
   let row = gameState.player.position[1];
   let n = gameState.map[row - 1].charAt(col).toString();
   let e = gameState.map[row].charAt(col + 1).toString();
   let s = gameState.map[row + 1].charAt(col).toString();
   let w = gameState.map[row].charAt(col - 1).toString();
+  console.log("dir ", dir, n, s, e, w);
   return !(
-    (n == "W" && dir == "N") ||
-    (s == "W" && dir == "S") ||
-    (e == "W" && dir == "E") ||
-    (w == "W" && dir == "W")
+    (n == "w" && dir == "n") ||
+    (s == "w" && dir == "s") ||
+    (e == "w" && dir == "e") ||
+    (w == "w" && dir == "w")
   );
 }
 
 function edgeFall(gameState, dir) {
   // bot checking to see if it will fall off edge
-  let col = gameState.player.position[0];
-  let row = gameState.player.position[1];
+  console.log("in edge fall.  dir - ", dir);
+  let col = gameState.bot.position[0];
+  let row = gameState.bot.position[1];
   let colMax = gameState.map.length - 1;
   let rowMax = gameState.map[0].length - 1;
   return (
-    (col == 0 && dir == "W") ||
-    (col == colMax && dir == "E") ||
-    (row == 0 && dir == "N") ||
-    (row == rowMax && dir == "S")
+    (col == 0 && dir == "w") ||
+    (col == colMax && dir == "e") ||
+    (row == 0 && dir == "n") ||
+    (row == rowMax && dir == "s")
   );
 }
 
@@ -373,7 +381,7 @@ export function processMovementBot(str, gameState) {
   switch (str) {
     case "n": {
       if (
-        notWall(
+        maps.notWall(
           gameState.bot.position[0],
           gameState.bot.position[1] - 1,
           colMax,
@@ -390,7 +398,7 @@ export function processMovementBot(str, gameState) {
     }
     case "s": {
       if (
-        notWall(
+        maps.notWall(
           gameState.bot.position[0],
           gameState.bot.position[1] + 1,
           colMax,
@@ -407,7 +415,7 @@ export function processMovementBot(str, gameState) {
     }
     case "w": {
       if (
-        notWall(
+        maps.notWall(
           gameState.bot.position[0] - 1,
           gameState.bot.position[1],
           colMax,
@@ -424,7 +432,7 @@ export function processMovementBot(str, gameState) {
     }
     case "e": {
       if (
-        notWall(
+        maps.notWall(
           gameState.bot.position[0] + 1,
           gameState.bot.position[1],
           colMax,
@@ -449,7 +457,7 @@ export function processMovementBot(str, gameState) {
     gameState.bot.position[0] > colMax
   ) {
     reply += blurbs.getBlurb(blurbs.botFallsEdge);
-    gameState.mode = "game-over";
+    gameState.mode = "bot-died";
     gameState.advance = false;
   }
   // if you're on a hole, fall
@@ -459,7 +467,7 @@ export function processMovementBot(str, gameState) {
     ) == "H"
   ) {
     reply += blurbs.getBlurb(blurbs.botFallsHole);
-    gameState.mode = "game-over";
+    gameState.mode = "bot-died";
     gameState.advance = false;
   }
 
@@ -475,7 +483,7 @@ export function processMovementBot(str, gameState) {
     if (Math.random() <= fallProb) {
       //fall
       reply += blurbs.getBlurb(blurbs.botFallsEdge);
-      gameState.mode = "game-over";
+      gameState.mode = "bot-died";
       gameState.advance = false;
     } else if (Math.random() <= dropProb) {
       let rObj = {};

@@ -207,7 +207,7 @@ export function processMovementPlayer(str, gameState) {
   switch (str) {
     case "n": {
       if (
-        notWall(
+        maps.notWall(
           gameState.player.position[0],
           gameState.player.position[1] - 1,
           colMax,
@@ -224,7 +224,7 @@ export function processMovementPlayer(str, gameState) {
     }
     case "s": {
       if (
-        notWall(
+        maps.notWall(
           gameState.player.position[0],
           gameState.player.position[1] + 1,
           colMax,
@@ -241,7 +241,7 @@ export function processMovementPlayer(str, gameState) {
     }
     case "w": {
       if (
-        notWall(
+        maps.notWall(
           gameState.player.position[0] - 1,
           gameState.player.position[1],
           colMax,
@@ -258,7 +258,7 @@ export function processMovementPlayer(str, gameState) {
     }
     case "e": {
       if (
-        notWall(
+        maps.notWall(
           gameState.player.position[0] + 1,
           gameState.player.position[1],
           colMax,
@@ -283,7 +283,7 @@ export function processMovementPlayer(str, gameState) {
     gameState.player.position[0] > colMax
   ) {
     reply += blurbs.getBlurb(blurbs.playerFallsEdge);
-    gameState.mode = "game-over";
+    gameState.mode = "player-died";
     gameState.advance = false;
   }
   // if you're on a hole, fall
@@ -293,7 +293,7 @@ export function processMovementPlayer(str, gameState) {
     ) == "H"
   ) {
     reply += blurbs.getBlurb(blurbs.playerFallsHole);
-    gameState.mode = "game-over";
+    gameState.mode = "player-died";
     gameState.advance = false;
   }
 
@@ -309,7 +309,7 @@ export function processMovementPlayer(str, gameState) {
     if (Math.random() <= fallProb) {
       //fall
       reply += blurbs.getBlurb(blurbs.playerFallsEdge);
-      gameState.mode = "game-over";
+      gameState.mode = "player-died";
       gameState.advance = false;
     } else if (Math.random() <= dropProb) {
       let rObj = {};
@@ -319,16 +319,6 @@ export function processMovementPlayer(str, gameState) {
     }
   }
   return { message: reply, gameState: gameState };
-}
-
-function notWall(col, row, maxCol, maxRow, gameState) {
-  // check to make sure there is no wall at passed cords
-  if (col < 0 || row < 0 || col > maxCol || row > maxRow) {
-    // no wall, but ledge
-    return true;
-  } else {
-    return gameState.map[row].charAt(col) != "W";
-  }
 }
 
 function dropWeaponPlayer(gameState) {

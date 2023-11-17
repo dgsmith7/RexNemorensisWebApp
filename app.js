@@ -23,9 +23,12 @@ app.post("/entry", async (req, res) => {
   let reply = "";
   let move = req.body.move;
   let gameState = req.body.gameState;
+  console.log("init gameState: ", gameState);
   rObj = game.processMovePlayer(move, gameState);
   reply = rObj.message;
   gameState = rObj.gameState;
+  console.log("after player move:");
+  console.log(gameState.mode, gameState.advance);
   if (gameState.advance) {
     rObj = game.advancePlayer(gameState);
     reply = rObj.message;
@@ -35,9 +38,16 @@ app.post("/entry", async (req, res) => {
     reply = rObj.message;
     gameState = rObj.gameState;
   }
+  console.log("after player advance:");
+  console.log(gameState.mode, gameState.advance);
+
   rObj = game.processMoveBot(gameState);
   reply += rObj.message;
   gameState = rObj.gameState;
+
+  console.log("after bot move:");
+  console.log(gameState.mode, gameState.advance);
+
   if (gameState.advance) {
     rObj = game.advanceBot(gameState);
     reply = rObj.message;
@@ -47,9 +57,12 @@ app.post("/entry", async (req, res) => {
     reply = rObj.message;
     gameState = rObj.gameState;
   }
+  console.log("after bot advance:");
+  console.log(gameState.mode, gameState.advance);
+  console.log();
   res.send({
     move: move,
-    reply: reply.message,
+    message: reply,
     gameState: gameState,
   });
 });

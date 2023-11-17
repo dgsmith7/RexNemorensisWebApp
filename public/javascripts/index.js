@@ -39,6 +39,7 @@
             .then((response) => {
               gameState = response.gameState;
               let append = "";
+              console.log(response.gameState.gameOver, response.message);
               if (gameState.gameOver == true) {
                 init = true;
                 append = `
@@ -49,7 +50,7 @@ Press ENTER for a new game.`;
               document.querySelector("#exchange-area").appendChild(node1);
               let node2 = document.createElement("div");
               node2.className = "response-area";
-              node2.innerHTML = `${response.reply}${append}`;
+              node2.innerHTML = `${response.message}${append}`;
               document.querySelector("#exchange-area").appendChild(node2);
               window.scrollTo(0, document.body.scrollHeight);
               document.querySelector("#entry-box").focus();

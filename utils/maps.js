@@ -1,4 +1,6 @@
 import * as blurbs from "./blurbs.js";
+import * as player from "./player.js";
+import * as bot from "./bot.js";
 
 export function loadWeaponsAndMagic(gameState) {
   // map codes for item pass: A - axe, S - sword, D - shield, M - Map. 12345 - magical items
@@ -61,6 +63,16 @@ export function displayMap(gameState) {
     reply = blurbs.getBlurb(blurbs.playerNoHave) + "<br/>";
   }
   return reply;
+}
+
+export function notWall(col, row, maxCol, maxRow, gameState) {
+  // check to make sure there is no wall at passed cords
+  if (col < 0 || row < 0 || col > maxCol || row > maxRow) {
+    // no wall, but ledge
+    return true;
+  } else {
+    return gameState.map[row].charAt(col) != "W";
+  }
 }
 
 export function getLocationBlurb(gameState) {
