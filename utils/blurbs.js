@@ -400,8 +400,10 @@ export let gameResetAfterWin = [
 
 export let regenerate = [
   `You make your way back to your camp to sharpen your weapons, grab some grub, and
-get cleaned up.
-You clean your loin cloth and your health improves by 25 points.
+get cleaned up. Time passes, walls become rubble, the ground shifts, trees grow.  
+Its as if you are in a new place altogether, but still hauntingly familiar.  Any map
+you had is now useless.  You clean your loin cloth then enjoy a good sleep. Your 
+health improves by 25 points.
 Another soul has been exiled to the Grove to challenge your reign.
 You almost feel sorry for them, then you remember that poem.`,
 ];
@@ -410,7 +412,7 @@ export let strongerEnemyTaunt = [
   `The more newly exiled souls you slaughter, the stronger they get, eh?`,
 ];
 
-export let gameOver = `You hear the tolling of a death knell.`;
+export let gameOver = [`You hear the tolling of a death knell.`];
 
 // player loses
 export let playerLoses = [
@@ -442,6 +444,7 @@ export let clothed = [
   `Commando bonus secured.`,
 ];
 
+export let extraQuip = [`Your loin cloth flaps with the wind...You blush.`];
 // intro
 export let intro = [
   `   You are a mage and warrior. For your mettle, you have been honored to serve a 
@@ -580,14 +583,14 @@ Rex Nemorensis - a text adventure game     Copyright(c) 2023 - David G. Smith
                          --McCaulay    #       |. . . \\\\\\  /// . . .|       #
                                        #       | . . . \\\\\\/// . . . |       #
                                        #       |. . . . \\\\\\/ . . . .|       #
-Press RETURN to play                   #       | . . . ./\\\\\\. . . . |       #
+                                       #       | . . . ./\\\\\\. . . . |       #
                                        #        \\ . . .///\\\\\\. . . /        #
                                        #         \\ \\\\ ///  \\\\\\ // /         #
                                        #          \\ \\\\// .. \\\\// /          #
                                        #           -/\\\\------//\\            #
                                        #           // \\\\    // \\\\           #
                                        #          //            \\\\          #
-                                       #                                    #
+         Press RETURN to play          #                                    #
                                        ######################################
 `;
 
@@ -599,3 +602,65 @@ export let song = [
 ];
 
 export let rules = [`this will be a more verbose explantion of game.`];
+
+export let poem = [
+  `
+  Those trees in whose dim shadow
+  The ghastly priest doth reign
+  The priest who slew the slayer,
+  And shall himself be slain.    -McCaulay
+
+`,
+];
+
+/* 
+You struck a glancing blow! Your enemy grunts and furrows their brow a bit.
+You struck with the axe inflicting 15 points damage,  while using the following magic items: 
+The loin cloth of fortitude (always on - well, almost always).
+Your health is 45.  The enemy's health is -10
+
+You hear the tolling of a death knell.
+Game over.
+
+You are victorious. 
+You have defeated 1 challengers.
+
+Press ENTER to continue.
+
+---------------------
+You make your way back to your camp to sharpen your weapons, grab some grub, and get cleaned up.
+
+You clean your loin cloth and your health improves by 25 points.
+
+Another soul has been exiled to the Grove to challenge your reign.
+
+You almost feel sorry for them, then you remember that poem.
+
+       Those trees in whose dim shadow
+       The ghastly priest doth reign
+       The priest who slew the slayer,
+       And shall himself be slain.    -McCaulay
+
+The more newly exiled souls you slaughter, the stronger they get, eh?
+
+Enemy health: 105
+Enemy shield: 1
+
+Press ENTER to continue.
+
+---------------------
+You reign continues.  A new challenger has entered the grove.
+
+INVENTORY AND STATUS:
+Your have 70 health points.
+Your strongest weapon is a axe - each direct hit removes 20 health from your enemy.
+Your shield (or lack thereof) provides 0 protection from any attack.
+These are your magic items: 
+   none
+Active magic Items:
+   none
+You have defeated 1 challengers.
+
+Press ENTER to continue.
+
+*/

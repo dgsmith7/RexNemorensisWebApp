@@ -28,6 +28,7 @@
             obj.move = "start";
             init = false;
           }
+
           fetch("/entry", {
             method: "POST",
             headers: {
@@ -39,14 +40,20 @@
             .then((response) => {
               gameState = response.gameState;
               let append = "";
-              console.log(response.gameState.gameOver, response.message);
               if (gameState.gameOver == true) {
                 init = true;
                 append = `
 Press ENTER for a new game.`;
               }
+              console.log(
+                "Reply length is ",
+                response.message.length,
+                " ",
+                response.message.split(/\n/).length
+              );
               let node1 = document.createElement("div");
-              node1.innerHTML = `> ${response.move}`;
+              node1.innerHTML = `-----------------------------------<br/>
+> ${response.move}`;
               document.querySelector("#exchange-area").appendChild(node1);
               let node2 = document.createElement("div");
               node2.className = "response-area";
@@ -56,7 +63,6 @@ Press ENTER for a new game.`;
               document.querySelector("#entry-box").focus();
               if (gameState.gameOver == true) {
                 init = true;
-                console.log(gameState.mode);
               }
             });
         }

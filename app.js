@@ -1,6 +1,8 @@
 import express from "express";
 import * as blurbs from "./utils/blurbs.js";
 import * as game from "./utils/game.js";
+import * as maps from "./utils/maps.js";
+
 let app = express();
 const port = 3000;
 
@@ -19,52 +21,65 @@ app.get("/", (req, res) => {
 });
 
 app.post("/entry", async (req, res) => {
-  let rObj = {};
+  console.log("---app /entry---");
   let reply = "";
   let move = req.body.move;
   let gameState = req.body.gameState;
-  console.log("init gameState: ", gameState);
-  rObj = game.processMovePlayer(move, gameState);
-  reply = rObj.message;
-  gameState = rObj.gameState;
-  console.log("after player move:");
-  console.log(gameState.mode, gameState.advance);
-  if (gameState.advance) {
-    rObj = game.advancePlayer(gameState);
-    reply = rObj.message;
-    gameState = rObj.gameState;
+  if (move == "start") {
+    await game
+      .initialize(gameState)
+      // .then((r) => r.json())
+      .then((data) => {
+        gameState = data;
+        console.log("app says initialize mode...");
+      });
+    await maps
+      .loadWeaponsAndMagic(gameState)
+      // .then((r) => r.json())
+      .then((data) => {
+        gameState = data.gameState;
+        reply = blurbs.intro;
+      })
+      .then(() => maps.getLocationBlurb(gameState))
+      .then((data) => {
+        reply += data + "<br/>";
+        reply += blurbs.getBlurb(blurbs.enterAMove);
+        console.log("app says loaded up grid.");
+        res.send({
+          move: move,
+          message: reply,
+          gameState: gameState,
+        });
+      });
   } else {
-    rObj = game.handleGameMode(gameState);
-    reply = rObj.message;
-    gameState = rObj.gameState;
+    await game.processMoveEntryPlayer(move, gameState).then((data) => {
+      reply += data.message;
+      gameState = data.gameState;
+      console.log("app says player move processed");
+    });
+
+    if (gameState.gameOver != true) {
+      await game
+        .processMoveEntryBot(gameState)
+        .then((data) => {
+          // if (gameState.gameOver != true) {
+          reply += data.message;
+          gameState = data.gameState;
+          console.log("app says bot move processed");
+          // }
+        })
+        .then(() => maps.getLocationBlurb(gameState))
+        .then((data) => {
+          reply += data + "<br/>";
+          reply += blurbs.getBlurb(blurbs.enterAMove);
+        });
+    }
+    res.send({
+      move: move,
+      message: reply,
+      gameState: gameState,
+    });
   }
-  console.log("after player advance:");
-  console.log(gameState.mode, gameState.advance);
-
-  rObj = game.processMoveBot(gameState);
-  reply += rObj.message;
-  gameState = rObj.gameState;
-
-  console.log("after bot move:");
-  console.log(gameState.mode, gameState.advance);
-
-  if (gameState.advance) {
-    rObj = game.advanceBot(gameState);
-    reply = rObj.message;
-    gameState = rObj.gameState;
-  } else {
-    rObj = game.handleGameMode(gameState);
-    reply = rObj.message;
-    gameState = rObj.gameState;
-  }
-  console.log("after bot advance:");
-  console.log(gameState.mode, gameState.advance);
-  console.log();
-  res.send({
-    move: move,
-    message: reply,
-    gameState: gameState,
-  });
 });
 
 app.post("/menu", async (req, res) => {});

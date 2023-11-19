@@ -5,7 +5,7 @@ html {
 body {
   padding-left: 10px;
   padding-right: 10px;
-  font: 18px "Syne Mono", Helvetica, Arial, serif;
+  font: 14px "Syne Mono", Helvetica, Arial, serif;
   color: #00cc00;
   text-shadow: 0 0 1px #00cc00, 0 0 2px #00cc00;
 }
@@ -26,7 +26,7 @@ label {
 }
 
 input {
-  font: 18px "Syne Mono", Helvetica, Arial, serif;
+  font: 14px "Syne Mono", Helvetica, Arial, serif;
   background-color: #00cc0010;
   color: #00cc00;
   text-shadow: 0 0 1px #00cc00, 0 0 2px #00cc00;

@@ -9,10 +9,27 @@ I originally heard of the concept of Rex Nemorensis by way of the film "Apolcaly
 
 TODO
 auth - jwt, sessions, api keys?, db?
-sign up - saas provides stat tracking and leaderboard access and game printouts - how to manage payment? crypto payment?
+sign up one time - provides stat tracking and leaderboard access and game printouts
 fix refresh problem - make history array
-add beat up map blurbs to display map
-remove hasMap true after dev
+
+bootstrap - resposniveness
+modal - info, , controls for saas, donate links (paypal, btc, eth, avax), problems
+
+testing -
+
+walls from same
+
+weapon drops from same
+h
+i
+q
+12345
+magic depletion correct for player and bot
+g
+a
+m
+add more easter eggs
+beef up the blurbs with more interesting or funny content
 
       ############################################
       #                                          #
