@@ -404,7 +404,7 @@ export async function initialize(gameState) {
         wins: 0,
       },
       advance: false,
-      map: maps[parseInt(Math.random(maps.length))], //maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
+      map: maps.layouts[parseInt(Math.random(maps.length))], //maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
       mode: "active", //active, bot-died, player-died, quit
       replay: true,
       history: [], // array of last 50 moves and replies for refresh
