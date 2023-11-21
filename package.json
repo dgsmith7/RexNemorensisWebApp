@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "badwords": "^1.0.0",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "ejs": "^3.1.9",
     "express": "~4.16.1",

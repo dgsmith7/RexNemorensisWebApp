@@ -17,17 +17,9 @@ modal - info, , controls for saas, donate links (paypal, btc, eth, avax), proble
 
 testing -
 
-walls from same
+pagination (probably remove all the multiline strings and make responsive divs)
+divs with fade
 
-weapon drops from same
-h
-i
-q
-12345
-magic depletion correct for player and bot
-g
-a
-m
 add more easter eggs
 beef up the blurbs with more interesting or funny content
 

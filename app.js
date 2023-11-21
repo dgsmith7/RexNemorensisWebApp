@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import * as blurbs from "./utils/blurbs.js";
 import * as game from "./utils/game.js";
 import * as maps from "./utils/maps.js";
@@ -13,6 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.render("index.ejs", {
