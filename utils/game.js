@@ -363,7 +363,7 @@ export async function initialize(gameState) {
         hasShield: false,
         hasSword: false,
         hasDagger: false,
-        hasMap: true, //false,
+        hasMap: false, //false,
         weapon: "dagger", // fist-5 dagger-10 sword-15 axe-20
         magicItems: ["Cloak of Invisibility", "", "", "", ""],
         invisibility: 0,
@@ -404,7 +404,7 @@ export async function initialize(gameState) {
         wins: 0,
       },
       advance: false,
-      map: maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
+      map: maps[parseInt(Math.random(maps.length))], //maps.testMap[0], //layouts[0], //maps[parseInt(Math.random(maps.length))],
       mode: "active", //active, bot-died, player-died, quit
       replay: true,
       history: [], // array of last 50 moves and replies for refresh
